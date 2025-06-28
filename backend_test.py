@@ -120,8 +120,18 @@ def test_status_endpoint():
 def test_cors_configuration():
     """Test if CORS is properly configured"""
     try:
-        # Send an OPTIONS request to check CORS headers
-        response = requests.options(f"{API_URL}/")
+        # Create headers with Origin to trigger CORS
+        headers = {
+            'Origin': 'http://example.com',
+            'Access-Control-Request-Method': 'GET',
+            'Access-Control-Request-Headers': 'Content-Type'
+        }
+        
+        # Send a GET request with Origin header to check CORS headers
+        response = requests.get(f"{API_URL}/", headers=headers)
+        
+        print(f"Response status code: {response.status_code}")
+        print(f"Response headers: {dict(response.headers)}")
         
         # Check if the CORS headers are present
         if 'Access-Control-Allow-Origin' in response.headers:
@@ -130,7 +140,7 @@ def test_cors_configuration():
             return True
         else:
             print("❌ CORS headers not found in response")
-            print(f"Response headers: {response.headers}")
+            print(f"Response headers: {dict(response.headers)}")
             return False
     except requests.exceptions.RequestException as e:
         print(f"❌ Failed to connect to server for CORS test: {e}")
