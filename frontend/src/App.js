@@ -1339,7 +1339,9 @@ function App() {
       </div>
     </div>
   );
+  };
 
+  // Payment Dialog Component
   const PaymentDialog = () => {
     const currentOrders = getCurrentOrders();
     const subtotal = getTotalAmount();
