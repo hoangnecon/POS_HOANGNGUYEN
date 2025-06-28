@@ -1658,9 +1658,6 @@ function App() {
       {/* Payment Page Modal */}
       {showPaymentPage && <PaymentPage />}
 
-      {/* Print Preview Modal */}
-      {showPrintPreview && <PrintPreview />}
-
       {/* Note Dialog */}
       {(showNoteDialog || showItemNoteDialog) && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
