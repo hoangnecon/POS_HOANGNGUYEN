@@ -757,7 +757,7 @@ function App() {
             </p>
           </div>
 
-          <div className="bg-primary-main rounded-3xl p-6 border border-primary-stroke shadow-xl">
+          <div className="bg-primary-main rounded-3xl p-6 shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold text-primary-headline">Chuyển khoản</h3>
               <div className="w-10 h-10 bg-primary-tertiary rounded-2xl flex items-center justify-center">
