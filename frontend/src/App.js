@@ -651,7 +651,7 @@ function App() {
 
   // Admin Sidebar
   const AdminSidebar = () => (
-    <div className="w-20 bg-gradient-to-b from-purple-900 to-purple-800 flex flex-col items-center py-8 shadow-2xl">
+    <div className="w-20 bg-gradient-to-b from-primary-900 to-primary-800 flex flex-col items-center py-8 shadow-2xl">
       {/* Logo */}
       <div className="w-14 h-14 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-10 border border-white/20">
         <Shield className="text-white" size={24} />
@@ -663,8 +663,8 @@ function App() {
           onClick={() => setAdminSection('dashboard')}
           className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
             adminSection === 'dashboard' 
-              ? 'bg-purple-600 text-white shadow-lg' 
-              : 'bg-purple-700 text-white/70 hover:text-white hover:bg-purple-600'
+              ? 'bg-primary-button text-white shadow-lg' 
+              : 'bg-primary-button text-white/70 hover:text-white hover:bg-primary-highlight'
           }`}
         >
           <BarChart3 size={22} />
@@ -677,8 +677,8 @@ function App() {
           onClick={() => setAdminSection('menus')}
           className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
             adminSection === 'menus' 
-              ? 'bg-purple-600 text-white shadow-lg' 
-              : 'bg-purple-700 text-white/70 hover:text-white hover:bg-purple-600'
+              ? 'bg-primary-button text-white shadow-lg' 
+              : 'bg-primary-button text-white/70 hover:text-white hover:bg-primary-highlight'
           }`}
         >
           <Package size={22} />
@@ -691,8 +691,8 @@ function App() {
           onClick={() => setAdminSection('items')}
           className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
             adminSection === 'items' 
-              ? 'bg-purple-600 text-white shadow-lg' 
-              : 'bg-purple-700 text-white/70 hover:text-white hover:bg-purple-600'
+              ? 'bg-primary-button text-white shadow-lg' 
+              : 'bg-primary-button text-white/70 hover:text-white hover:bg-primary-highlight'
           }`}
         >
           <UtensilsCrossed size={22} />
@@ -700,34 +700,20 @@ function App() {
             <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-full" />
           )}
         </button>
-
-        <button
-          onClick={() => setAdminSection('staff')}
-          className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
-            adminSection === 'staff' 
-              ? 'bg-purple-600 text-white shadow-lg' 
-              : 'bg-purple-700 text-white/70 hover:text-white hover:bg-purple-600'
-          }`}
-        >
-          <Users size={22} />
-          {adminSection === 'staff' && (
-            <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-full" />
-          )}
-        </button>
       </div>
       
       {/* Secondary Navigation */}
       <div className="flex-1 flex flex-col justify-end space-y-4">
-        <button className="w-14 h-14 rounded-2xl bg-purple-700 text-white/50 hover:text-white/80 hover:bg-purple-600 flex items-center justify-center transition-all duration-300">
+        <button className="w-14 h-14 rounded-2xl bg-primary-button text-white/50 hover:text-white/80 hover:bg-primary-highlight flex items-center justify-center transition-all duration-300">
           <Settings size={22} />
         </button>
         <button 
           onClick={handleLogout}
-          className="w-14 h-14 rounded-2xl bg-purple-700 text-white/50 hover:text-white/80 hover:bg-purple-600 flex items-center justify-center transition-all duration-300"
+          className="w-14 h-14 rounded-2xl bg-primary-button text-white/50 hover:text-white/80 hover:bg-primary-highlight flex items-center justify-center transition-all duration-300"
         >
           <LogOut size={22} />
         </button>
-        <button className="w-14 h-14 rounded-2xl bg-purple-700 text-white/50 hover:text-white/80 hover:bg-purple-600 flex items-center justify-center transition-all duration-300">
+        <button className="w-14 h-14 rounded-2xl bg-primary-button text-white/50 hover:text-white/80 hover:bg-primary-highlight flex items-center justify-center transition-all duration-300">
           <User size={22} />
         </button>
       </div>
