@@ -657,7 +657,7 @@ function App() {
           <div
             key={item.id}
             onClick={() => addToOrder(item)}
-            className="bg-primary-main rounded-3xl p-6 border border-primary-stroke hover:border-primary-highlight cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group"
+            className="bg-primary-main rounded-3xl p-6 hover:bg-primary-secondary cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group shadow-lg"
           >
             <div className="relative">
               <div className="w-full h-40 bg-primary-secondary rounded-2xl mb-4 overflow-hidden">
