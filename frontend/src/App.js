@@ -234,9 +234,6 @@ function App() {
   const [showLoginPage, setShowLoginPage] = useState(true);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  const [showLoginPage, setShowLoginPage] = useState(false);
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
 
   
   // Dashboard states
