@@ -1162,15 +1162,15 @@ function App() {
     });
 
     return (
-      <div className="p-8 h-full overflow-y-auto bg-gray-50">
+      <div className="p-8 h-full overflow-y-auto bg-primary-bg">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">Quản lý Món ăn</h1>
-            <p className="text-gray-600 text-lg">Thêm, sửa, xóa các món ăn</p>
+            <h1 className="text-4xl font-bold text-primary-headline mb-3">Quản lý Món ăn</h1>
+            <p className="text-primary-paragraph text-lg">Thêm, sửa, xóa các món ăn</p>
           </div>
           <button
             onClick={() => setShowAddItemDialog(true)}
-            className="bg-purple-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-purple-700 transition-colors"
+            className="bg-primary-button text-primary-main px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-primary-highlight transition-colors shadow-lg"
           >
             <Plus size={20} />
             Thêm Món Mới
@@ -1181,8 +1181,8 @@ function App() {
         <div className="flex gap-3 mb-6">
           <button
             onClick={() => setItemFilter('all')}
-            className={`px-4 py-2 rounded-xl font-medium transition-colors ${
-              itemFilter === 'all' ? 'bg-purple-600 text-white' : 'bg-white text-gray-700'
+            className={`px-4 py-2 rounded-xl font-medium transition-colors shadow-md ${
+              itemFilter === 'all' ? 'bg-primary-button text-primary-main' : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
             }`}
           >
             Tất cả ({menuItems.length})
@@ -1191,8 +1191,8 @@ function App() {
             <button
               key={menu.id}
               onClick={() => setItemFilter(menu.id)}
-              className={`px-4 py-2 rounded-xl font-medium transition-colors ${
-                itemFilter === menu.id ? 'bg-purple-600 text-white' : 'bg-white text-gray-700'
+              className={`px-4 py-2 rounded-xl font-medium transition-colors shadow-md ${
+                itemFilter === menu.id ? 'bg-primary-button text-primary-main' : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
               }`}
             >
               {menu.name} ({menuItems.filter(item => item.menuType === menu.id).length})
@@ -1203,7 +1203,7 @@ function App() {
         {/* Items Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredItems.map((item) => (
-            <div key={item.id} className="bg-white rounded-3xl p-4 shadow-xl">
+            <div key={item.id} className="bg-primary-main rounded-3xl p-4 shadow-xl">
               <div className="relative mb-4">
                 <img 
                   src={item.image} 
@@ -1211,15 +1211,15 @@ function App() {
                   className="w-full h-32 object-cover rounded-2xl"
                 />
                 {item.isPopular && (
-                  <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                  <div className="absolute top-2 right-2 bg-primary-highlight text-primary-main px-2 py-1 rounded-full text-xs font-bold">
                     <Star size={12} className="inline" />
                   </div>
                 )}
               </div>
               
-              <h3 className="font-bold text-gray-900 mb-1">{item.name}</h3>
-              <p className="text-sm text-gray-600 mb-2">{item.category}</p>
-              <p className="text-lg font-bold text-purple-600 mb-3">{item.price.toLocaleString('vi-VN')}đ</p>
+              <h3 className="font-bold text-primary-headline mb-1">{item.name}</h3>
+              <p className="text-sm text-primary-paragraph mb-2">{item.category}</p>
+              <p className="text-lg font-bold text-primary-button mb-3">{item.price.toLocaleString('vi-VN')}đ</p>
               
               <div className="flex gap-2">
                 <button
@@ -1227,13 +1227,13 @@ function App() {
                     setSelectedMenuItem(item);
                     setShowEditItemDialog(true);
                   }}
-                  className="flex-1 bg-blue-100 text-blue-600 py-2 rounded-lg font-medium hover:bg-blue-200 transition-colors"
+                  className="flex-1 bg-primary-secondary text-primary-button py-2 rounded-lg font-medium hover:bg-primary-stroke transition-colors shadow-md"
                 >
                   Sửa
                 </button>
                 <button
                   onClick={() => deleteMenuItem(item.id)}
-                  className="flex-1 bg-red-100 text-red-600 py-2 rounded-lg font-medium hover:bg-red-200 transition-colors"
+                  className="flex-1 bg-primary-tertiary-light text-primary-tertiary py-2 rounded-lg font-medium hover:bg-primary-tertiary transition-colors shadow-md"
                 >
                   Xóa
                 </button>
