@@ -1395,82 +1395,14 @@ function App() {
     );
   };
 
-  // Admin Staff Management
-  const AdminStaff = () => (
-    <div className="p-8 h-full overflow-y-auto bg-gray-50">
-      <div className="flex justify-between items-center mb-8">
-        <div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">Quản lý Nhân viên</h1>
-          <p className="text-gray-600 text-lg">Quản lý thông tin nhân viên</p>
-        </div>
-        <button className="bg-purple-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-purple-700 transition-colors">
-          <Plus size={20} />
-          Thêm Nhân viên
-        </button>
-      </div>
-
-      <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Tên</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Chức vụ</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Trạng thái</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Ngày vào làm</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Hành động</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {staffList.map((staff) => (
-                <tr key={staff.id}>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                        {staff.name.charAt(0)}
-                      </div>
-                      <span className="font-medium text-gray-900">{staff.name}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-gray-900">{staff.role}</td>
-                  <td className="px-6 py-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      staff.status === 'active' 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {staff.status === 'active' ? 'Hoạt động' : 'Nghỉ việc'}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-gray-900">{staff.joinDate}</td>
-                  <td className="px-6 py-4">
-                    <div className="flex gap-2">
-                      <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
-                        <Edit3 size={16} />
-                      </button>
-                      <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg">
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
-
   // Admin Page Layout
   const AdminPage = () => (
-    <div className="h-screen bg-gray-50 flex overflow-hidden">
+    <div className="h-screen bg-primary-bg flex overflow-hidden">
       <AdminSidebar />
       <div className="flex-1 overflow-hidden">
         {adminSection === 'dashboard' && <AdminDashboard />}
         {adminSection === 'menus' && <AdminMenus />}
         {adminSection === 'items' && <AdminItems />}
-        {adminSection === 'staff' && <AdminStaff />}
       </div>
     </div>
   );
