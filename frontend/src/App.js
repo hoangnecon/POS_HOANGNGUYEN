@@ -31,7 +31,11 @@ import {
   CreditCard,
   Banknote,
   Trash2,
-  CalendarDays
+  CalendarDays,
+  ArrowLeft,
+  Check,
+  Percent,
+  Calculator
 } from 'lucide-react';
 import './App.css';
 
