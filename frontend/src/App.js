@@ -332,6 +332,70 @@ function App() {
     return getCurrentOrders().reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
+  const getDiscountAmount = () => {
+    const total = getTotalAmount();
+    if (discountType === 'percent') {
+      return (total * discountValue) / 100;
+    } else if (discountType === 'amount') {
+      return discountValue;
+    }
+    return 0;
+  };
+
+  const getFinalAmount = () => {
+    return getTotalAmount() - getDiscountAmount();
+  };
+
+  const getRemainingAmount = () => {
+    if (partialPayment) {
+      return Math.max(0, getFinalAmount() - paidAmount);
+    }
+    return 0;
+  };
+
+  const processPayment = () => {
+    const finalAmount = getFinalAmount();
+    const paymentData = {
+      tableId: selectedTable,
+      items: getCurrentOrders(),
+      subtotal: getTotalAmount(),
+      discount: getDiscountAmount(),
+      total: finalAmount,
+      paymentMethod: paymentMethod,
+      partialPayment: partialPayment,
+      paidAmount: partialPayment ? paidAmount : finalAmount,
+      remainingAmount: getRemainingAmount(),
+      timestamp: new Date().toISOString(),
+      cashier: 'Thu ngân A' // In real app, get from auth
+    };
+
+    // In real app, save to backend
+    console.log('Payment processed:', paymentData);
+    
+    if (!partialPayment || getRemainingAmount() === 0) {
+      // Clear table if fully paid
+      clearTable();
+    }
+    
+    setShowPaymentPage(false);
+    // Show success notification in real app
+  };
+
+  const printBill = () => {
+    setPrintType('bill');
+    setShowPrintPreview(true);
+  };
+
+  const printOrder = () => {
+    setPrintType('order');
+    setShowPrintPreview(true);
+  };
+
+  const handlePrint = () => {
+    window.print();
+    setShowPrintPreview(false);
+  };
+
   const handleNoteSubmit = () => {
     if (currentNoteType === 'table') {
       setTableNotes({
