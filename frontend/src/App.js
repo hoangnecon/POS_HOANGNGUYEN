@@ -788,12 +788,12 @@ function App() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Best Selling Items */}
-          <div className="bg-primary-main rounded-3xl p-6 border border-primary-stroke shadow-xl">
+          <div className="bg-primary-main rounded-3xl p-6 shadow-xl">
             <h3 className="text-xl font-bold text-primary-headline mb-6">Món bán chạy nhất</h3>
             {bestSelling.length > 0 ? (
               <div className="space-y-4">
                 {bestSelling.map((item, index) => (
-                  <div key={item.name} className="flex items-center justify-between p-3 bg-primary-secondary rounded-xl">
+                  <div key={item.name} className="flex items-center justify-between p-3 bg-primary-secondary rounded-xl shadow-md">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 bg-primary-button rounded-full flex items-center justify-center text-primary-main font-bold text-sm">
                         {index + 1}
