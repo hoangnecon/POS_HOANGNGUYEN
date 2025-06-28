@@ -1197,15 +1197,23 @@ function App() {
             </div>
             
             <div className="space-y-3">
-              <button className="w-full bg-primary-button hover:bg-primary-highlight text-primary-main py-3 rounded-xl font-bold text-lg transition-all shadow-lg">
+              <button className="w-full bg-primary-button hover:bg-primary-highlight text-primary-main py-3 rounded-xl font-bold text-lg transition-all shadow-lg"
+                onClick={() => setShowPaymentPage(true)}
+              >
                 THANH TOÁN
               </button>
               <div className="grid grid-cols-2 gap-2">
-                <button className="bg-primary-main hover:bg-primary-secondary text-primary-button py-2 rounded-xl font-bold transition-all flex items-center justify-center gap-1 shadow-md">
+                <button 
+                  onClick={printBill}
+                  className="bg-primary-main hover:bg-primary-secondary text-primary-button py-2 rounded-xl font-bold transition-all flex items-center justify-center gap-1 shadow-md"
+                >
                   <Printer size={16} />
                   <span className="text-xs">IN HÓA ĐƠN</span>
                 </button>
-                <button className="bg-primary-main hover:bg-primary-secondary text-primary-button py-2 rounded-xl font-bold transition-all flex items-center justify-center gap-1 shadow-md">
+                <button 
+                  onClick={printOrder}
+                  className="bg-primary-main hover:bg-primary-secondary text-primary-button py-2 rounded-xl font-bold transition-all flex items-center justify-center gap-1 shadow-md"
+                >
                   <FileText size={16} />
                   <span className="text-xs">GỬI BẾP</span>
                 </button>
