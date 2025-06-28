@@ -254,11 +254,7 @@ function App() {
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
   const [newMenuType, setNewMenuType] = useState('');
   const [newMenuName, setNewMenuName] = useState('');
-  const [staffList, setStaffList] = useState([
-    { id: 1, name: 'Nguyễn Văn A', role: 'Thu ngân', status: 'active', joinDate: '2024-01-15' },
-    { id: 2, name: 'Trần Thị B', role: 'Bếp trưởng', status: 'active', joinDate: '2024-01-10' },
-    { id: 3, name: 'Lê Văn C', role: 'Phục vụ', status: 'active', joinDate: '2024-01-20' }
-  ]);
+  const [staffList, setStaffList] = useState([]);
   
   // Dashboard states
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
