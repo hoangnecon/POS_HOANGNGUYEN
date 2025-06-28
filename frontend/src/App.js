@@ -13,8 +13,6 @@ import {
   X,
   ShoppingCart,
   Receipt,
-  Printer,
-  FileText,
   Clock,
   Users,
   Star,
