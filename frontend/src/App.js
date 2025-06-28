@@ -1150,13 +1150,13 @@ function App() {
               <div className="flex gap-3">
                 <button
                   onClick={clearTable}
-                  className="flex-1 bg-primary-tertiary text-primary-main py-2 rounded-xl font-bold"
+                  className="flex-1 bg-primary-tertiary text-primary-main py-2 rounded-xl font-bold shadow-md"
                 >
                   Xóa
                 </button>
                 <button
                   onClick={() => setShowClearDialog(false)}
-                  className="flex-1 bg-primary-secondary text-primary-button py-2 rounded-xl font-bold border border-primary-stroke"
+                  className="flex-1 bg-primary-secondary text-primary-button py-2 rounded-xl font-bold shadow-md"
                 >
                   Hủy
                 </button>
