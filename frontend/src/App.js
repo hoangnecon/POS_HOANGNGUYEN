@@ -234,15 +234,6 @@ function App() {
   const [showLoginPage, setShowLoginPage] = useState(true);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  
-  // Authentication states
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showLoginPage, setShowLoginPage] = useState(true);
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  
-  // Authentication states
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginPage, setShowLoginPage] = useState(false);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
