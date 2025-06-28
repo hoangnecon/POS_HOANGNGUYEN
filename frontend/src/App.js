@@ -222,12 +222,18 @@ function App() {
   const [showItemNoteDialog, setShowItemNoteDialog] = useState(false);
   const [tableFilter, setTableFilter] = useState('all'); // 'all', 'available', 'used'
   const [showClearDialog, setShowClearDialog] = useState(false);
-  const [showPaymentPage, setShowPaymentPage] = useState(false);
+  const [showPaymentDialog, setShowPaymentDialog] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('cash'); // 'cash' or 'transfer'
   const [discountType, setDiscountType] = useState('none'); // 'none', 'percent', 'amount'
   const [discountValue, setDiscountValue] = useState(0);
   const [partialPayment, setPartialPayment] = useState(false);
   const [paidAmount, setPaidAmount] = useState(0);
+  
+  // Authentication states
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginPage, setShowLoginPage] = useState(false);
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
 
   
   // Dashboard states
