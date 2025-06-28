@@ -556,10 +556,10 @@ function App() {
         {/* Takeaway Button - First position */}
         <button
           onClick={() => setSelectedTable('takeaway')}
-          className={`aspect-square rounded-3xl flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg border-2 ${
+          className={`aspect-square rounded-3xl flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg ${
             selectedTable === 'takeaway'
-              ? 'bg-primary-button-light text-primary-button border-primary-button shadow-xl'
-              : 'bg-primary-main text-primary-button border-primary-stroke hover:border-primary-highlight hover:bg-primary-secondary'
+              ? 'bg-primary-button text-primary-main shadow-xl'
+              : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
           }`}
         >
           <div className="text-lg mb-1">📦</div>
