@@ -573,12 +573,12 @@ function App() {
             <button
               key={table.id}
               onClick={() => setSelectedTable(table.id)}
-              className={`aspect-square rounded-3xl flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg border-2 ${
-                selectedTable === table.id && hasOrders
-                  ? 'bg-primary-button-light text-primary-button border-primary-button shadow-xl'
-                  : table.status === 'occupied'
-                  ? 'bg-primary-tertiary text-primary-main shadow-xl border-primary-tertiary'
-                  : 'bg-primary-main text-primary-button border-primary-stroke hover:border-primary-highlight hover:bg-primary-secondary'
+              className={`aspect-square rounded-3xl flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg ${
+                selectedTable === table.id
+                  ? 'bg-primary-button text-primary-main shadow-xl'
+                  : hasOrders
+                  ? 'bg-primary-button-light text-primary-button shadow-md'
+                  : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
               }`}
             >
               <div className="text-lg mb-1">
