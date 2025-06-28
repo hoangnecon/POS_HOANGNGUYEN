@@ -1660,7 +1660,7 @@ function App() {
       </div>
 
       {/* Payment Page Modal */}
-      {showPaymentPage && <PaymentPage />}
+      {showPaymentDialog && <PaymentPage />}
 
       {/* Note Dialog */}
       {(showNoteDialog || showItemNoteDialog) && (
