@@ -727,7 +727,7 @@ function App() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-primary-main rounded-3xl p-6 border border-primary-stroke shadow-xl">
+          <div className="bg-primary-main rounded-3xl p-6 shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold text-primary-headline">Tổng doanh thu</h3>
               <div className="w-10 h-10 bg-primary-highlight rounded-2xl flex items-center justify-center">
