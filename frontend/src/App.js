@@ -950,7 +950,7 @@ function App() {
     return (
       <div className="w-[480px] bg-primary-main flex flex-col h-screen shadow-2xl">
         {/* Header - Fixed */}
-        <div className="p-6 border-b border-primary-stroke bg-primary-main">
+        <div className="p-6 bg-primary-main shadow-md">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-primary-button rounded-xl flex items-center justify-center">
