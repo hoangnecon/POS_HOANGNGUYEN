@@ -1141,7 +1141,7 @@ function App() {
         {/* Clear Table Dialog */}
         {showClearDialog && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-primary-main rounded-2xl p-6 m-4 w-full max-w-md border border-primary-stroke">
+            <div className="bg-primary-main rounded-2xl p-6 m-4 w-full max-w-md shadow-2xl">
               <h3 className="text-lg font-bold text-primary-headline mb-4">Xác nhận xóa</h3>
               <p className="text-primary-paragraph mb-6">
                 Bạn có chắc chắn muốn xóa tất cả món ăn trong{' '}
