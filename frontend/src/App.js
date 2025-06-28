@@ -638,10 +638,10 @@ function App() {
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold transition-all duration-300 border ${
+              className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-md ${
                 selectedCategory === category.id
-                  ? 'bg-primary-button text-primary-main shadow-lg border-primary-button'
-                  : 'bg-primary-main text-primary-button hover:bg-primary-secondary border-primary-stroke'
+                  ? 'bg-primary-button text-primary-main shadow-lg'
+                  : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
               }`}
             >
               <IconComponent size={18} />
