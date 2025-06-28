@@ -1448,7 +1448,7 @@ function App() {
               </button>
               
               <button
-                onClick={() => setShowPaymentPage(false)}
+                onClick={() => setShowPaymentDialog(false)}
                 className="w-full bg-primary-secondary hover:bg-primary-paragraph text-primary-button py-3 rounded-xl font-bold transition-all shadow-md"
               >
                 Hủy bỏ
