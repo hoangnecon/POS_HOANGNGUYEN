@@ -107,15 +107,18 @@ user_problem_statement: "Vietnamese restaurant CASHAA POS application with compr
 backend:
   - task: "Backend API setup and functionality"
     implemented: true
-    working: "unknown"
+    working: false
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "unknown"
         agent: "main"
         comment: "Backend not yet tested, need to verify API endpoints and database connectivity"
+      - working: false
+        agent: "testing"
+        comment: "Backend server is running and API endpoints (/api/ and /api/status) are working correctly. MongoDB connection is functioning properly as we can create and retrieve status checks. However, CORS is not properly configured - OPTIONS requests return 405 Method Not Allowed, which will prevent frontend from making cross-origin requests. The CORS middleware is added to the app but not handling preflight requests correctly."
 
 frontend:
   - task: "Fix syntax error in App.js"
