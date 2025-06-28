@@ -1168,7 +1168,7 @@ function App() {
         {/* Note Dialog */}
         {(showNoteDialog || showItemNoteDialog) && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-primary-main rounded-2xl p-6 m-4 w-full max-w-md border border-primary-stroke">
+            <div className="bg-primary-main rounded-2xl p-6 m-4 w-full max-w-md shadow-2xl">
               <h3 className="text-lg font-bold text-primary-headline mb-4">
                 {currentNoteType === 'table' ? 'Ghi chú đơn hàng' : 'Ghi chú món ăn'}
               </h3>
