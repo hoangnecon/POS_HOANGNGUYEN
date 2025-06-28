@@ -176,3 +176,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Examined App.js - no syntax errors found. File is complete with PaymentPage and PrintPreview components implemented. Need to test backend first, then frontend functionality including payment and printing features."
+  - agent: "testing"
+    message: "Tested backend API functionality. Created and ran comprehensive tests in backend_test.py. Found that the server is running correctly and API endpoints are working properly. Database connection is functioning as expected. However, there's an issue with CORS configuration - OPTIONS requests return 405 Method Not Allowed, which will prevent the frontend from making cross-origin requests. This needs to be fixed for the frontend to communicate with the backend."
