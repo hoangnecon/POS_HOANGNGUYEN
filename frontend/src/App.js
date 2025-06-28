@@ -625,7 +625,7 @@ function App() {
             placeholder="Tìm kiếm món ăn..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-6 py-3 bg-primary-main border border-primary-stroke rounded-2xl focus:ring-2 focus:ring-primary-highlight focus:border-primary-highlight transition-all duration-300"
+            className="w-full pl-12 pr-6 py-3 bg-primary-main rounded-2xl focus:ring-2 focus:ring-primary-highlight focus:border-transparent transition-all duration-300 shadow-md"
           />
         </div>
       </div>
