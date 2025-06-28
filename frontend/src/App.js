@@ -422,6 +422,30 @@ function App() {
     setShowOrderDetails(true);
   };
 
+  // Authentication functions
+  const handleLogin = () => {
+    // Simple frontend-only login - accept any email/password
+    if (loginEmail && loginPassword) {
+      setIsLoggedIn(true);
+      setShowLoginPage(false);
+      setLoginEmail('');
+      setLoginPassword('');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setShowLoginPage(true);
+    setSelectedTable(null);
+    setOrders({});
+    setActiveSection('tables');
+  };
+
+  const handleAdminLogin = () => {
+    // For admin direct access
+    setShowLoginPage(true);
+  };
+
   const filteredMenuItems = MENU_ITEMS.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesMenuType = item.menuType === selectedMenuType;
