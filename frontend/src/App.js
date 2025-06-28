@@ -234,7 +234,6 @@ function App() {
   const [showLoginPage, setShowLoginPage] = useState(true);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-
   
   // Dashboard states
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
@@ -254,6 +253,30 @@ function App() {
     }
     return initialTables;
   });
+
+  // Authentication functions
+  const handleLogin = () => {
+    // Simple frontend-only login - accept any email/password
+    if (loginEmail && loginPassword) {
+      setIsLoggedIn(true);
+      setShowLoginPage(false);
+      setLoginEmail('');
+      setLoginPassword('');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setShowLoginPage(true);
+    setSelectedTable(null);
+    setOrders({});
+    setActiveSection('tables');
+  };
+
+  const handleAdminLogin = () => {
+    // For admin direct access
+    setShowLoginPage(true);
+  };
 
   const addToOrder = (item) => {
     if (!selectedTable) return;
@@ -384,7 +407,6 @@ function App() {
     // Show success notification in real app
   };
 
-
   const handleNoteSubmit = () => {
     if (currentNoteType === 'table') {
       setTableNotes({
@@ -420,54 +442,6 @@ function App() {
   const openOrderDetails = (order) => {
     setSelectedOrder(order);
     setShowOrderDetails(true);
-  };
-
-  // Authentication functions
-  const handleLogin = () => {
-    // Simple frontend-only login - accept any email/password
-    if (loginEmail && loginPassword) {
-      setIsLoggedIn(true);
-      setShowLoginPage(false);
-      setLoginEmail('');
-      setLoginPassword('');
-    }
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setShowLoginPage(true);
-    setSelectedTable(null);
-    setOrders({});
-    setActiveSection('tables');
-  };
-
-  const handleAdminLogin = () => {
-    // For admin direct access
-    setShowLoginPage(true);
-  };
-
-  // Authentication functions
-  const handleLogin = () => {
-    // Simple frontend-only login - accept any email/password
-    if (loginEmail && loginPassword) {
-      setIsLoggedIn(true);
-      setShowLoginPage(false);
-      setLoginEmail('');
-      setLoginPassword('');
-    }
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setShowLoginPage(true);
-    setSelectedTable(null);
-    setOrders({});
-    setActiveSection('tables');
-  };
-
-  const handleAdminLogin = () => {
-    // For admin direct access
-    setShowLoginPage(true);
   };
 
   const filteredMenuItems = MENU_ITEMS.filter(item => {
@@ -534,6 +508,73 @@ function App() {
     
     return allTables;
   };
+
+  // Login Page Component
+  const LoginPage = () => (
+    <div className="h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
+      <div className="bg-gray-800 rounded-2xl p-8 w-full max-w-md shadow-2xl">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span className="text-white font-bold text-2xl">C</span>
+          </div>
+          <h1 className="text-2xl font-bold text-white mb-2">Login to your account</h1>
+          <p className="text-gray-400 text-sm">Enter your email below to login to your account</p>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <label className="block text-white text-sm font-medium mb-2">Email</label>
+            <input
+              type="email"
+              placeholder="m@example.com"
+              value={loginEmail}
+              onChange={(e) => setLoginEmail(e.target.value)}
+              className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+            />
+          </div>
+
+          <div>
+            <div className="flex justify-between items-center mb-2">
+              <label className="block text-white text-sm font-medium">Password</label>
+              <button className="text-orange-500 text-sm hover:text-orange-400">
+                Forgot your password?
+              </button>
+            </div>
+            <input
+              type="password"
+              value={loginPassword}
+              onChange={(e) => setLoginPassword(e.target.value)}
+              className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+            />
+          </div>
+
+          <button
+            onClick={handleLogin}
+            className="w-full bg-white text-gray-900 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+          >
+            Login
+          </button>
+
+          <div className="text-center text-gray-400 text-sm">
+            <p>Or continue with</p>
+          </div>
+
+          <button 
+            onClick={() => setShowLoginPage(false)}
+            className="w-full bg-gray-700 text-white py-3 rounded-lg font-medium hover:bg-gray-600 transition-colors flex items-center justify-center gap-2"
+          >
+            <span>🔑</span>
+            Login as Admin
+          </button>
+
+          <div className="text-center text-gray-400 text-sm">
+            <span>Don't have an account? </span>
+            <button className="text-white hover:text-orange-400">Sign up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   const Sidebar = () => (
     <div className="w-20 bg-gradient-to-b from-primary-900 to-primary-800 flex flex-col items-center py-8 shadow-2xl">
@@ -1237,7 +1278,8 @@ function App() {
             </div>
             
             <div className="space-y-3">
-              <button className="w-full bg-primary-button hover:bg-primary-highlight text-primary-main py-3 rounded-xl font-bold text-lg transition-all shadow-lg"
+              <button 
+                className="w-full bg-primary-button hover:bg-primary-highlight text-primary-main py-3 rounded-xl font-bold text-lg transition-all shadow-lg"
                 onClick={() => setShowPaymentDialog(true)}
               >
                 THANH TOÁN
@@ -1276,71 +1318,6 @@ function App() {
     );
   };
 
-  // Login Page Component
-  const LoginPage = () => (
-    <div className="h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
-      <div className="bg-gray-800 rounded-2xl p-8 w-full max-w-md shadow-2xl">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-bold text-2xl">C</span>
-          </div>
-          <h1 className="text-2xl font-bold text-white mb-2">Login to your account</h1>
-          <p className="text-gray-400 text-sm">Enter your email below to login to your account</p>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <label className="block text-white text-sm font-medium mb-2">Email</label>
-            <input
-              type="email"
-              placeholder="m@example.com"
-              value={loginEmail}
-              onChange={(e) => setLoginEmail(e.target.value)}
-              className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-            />
-          </div>
-
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label className="block text-white text-sm font-medium">Password</label>
-              <button className="text-orange-500 text-sm hover:text-orange-400">
-                Forgot your password?
-              </button>
-            </div>
-            <input
-              type="password"
-              value={loginPassword}
-              onChange={(e) => setLoginPassword(e.target.value)}
-              className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-            />
-          </div>
-
-          <button
-            onClick={handleLogin}
-            className="w-full bg-white text-gray-900 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors"
-          >
-            Login
-          </button>
-
-          <div className="text-center text-gray-400 text-sm">
-            <p>Or continue with</p>
-          </div>
-
-          <button className="w-full bg-gray-700 text-white py-3 rounded-lg font-medium hover:bg-gray-600 transition-colors flex items-center justify-center gap-2">
-            <span>🔑</span>
-            Login as Admin
-          </button>
-
-          <div className="text-center text-gray-400 text-sm">
-            <span>Don't have an account? </span>
-            <button className="text-white hover:text-orange-400">Sign up</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-  };
-
   // Payment Dialog Component
   const PaymentDialog = () => {
     const currentOrders = getCurrentOrders();
@@ -1349,134 +1326,125 @@ function App() {
     const finalAmount = getFinalAmount();
 
     return (
-  const PaymentDialog = () => {
-    const currentOrders = getCurrentOrders();
-    const subtotal = getTotalAmount();
-    const discountAmount = getDiscountAmount();
-    const finalAmount = getFinalAmount();
-
-    return (
-      <div className="fixed inset-0 bg-primary-bg z-50 overflow-y-auto">
-        <div className="min-h-full flex">
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="bg-primary-main rounded-3xl w-full max-w-5xl max-h-[90vh] shadow-2xl flex overflow-hidden">
           {/* Left side - Order details */}
-          <div className="flex-1 p-8">
-            <div className="bg-primary-main rounded-3xl p-8 shadow-xl max-w-2xl mx-auto">
-              {/* Header */}
-              <div className="flex items-center gap-4 mb-8">
-                <button
-                  onClick={() => setShowPaymentDialog(false)}
-                  className="w-12 h-12 bg-primary-secondary rounded-xl flex items-center justify-center hover:bg-primary-highlight transition-colors"
-                >
-                  <ArrowLeft size={20} className="text-primary-button" />
-                </button>
-                <div>
-                  <h1 className="text-3xl font-bold text-primary-headline">Thanh toán</h1>
-                  <p className="text-primary-paragraph">
-                    {selectedTable === 'takeaway' ? 'Đơn mang về' : `Bàn ${selectedTable}`}
-                  </p>
-                </div>
+          <div className="flex-1 p-8 overflow-y-auto">
+            {/* Header */}
+            <div className="flex items-center gap-4 mb-6">
+              <button
+                onClick={() => setShowPaymentDialog(false)}
+                className="w-12 h-12 bg-primary-secondary rounded-xl flex items-center justify-center hover:bg-primary-highlight transition-colors"
+              >
+                <ArrowLeft size={20} className="text-primary-button" />
+              </button>
+              <div>
+                <h1 className="text-2xl font-bold text-primary-headline">Thanh toán</h1>
+                <p className="text-primary-paragraph">
+                  {selectedTable === 'takeaway' ? 'Đơn mang về' : `Bàn ${selectedTable}`}
+                </p>
               </div>
+            </div>
 
-              {/* Order Items */}
-              <div className="mb-8">
-                <h3 className="text-xl font-bold text-primary-headline mb-4">Chi tiết đơn hàng</h3>
-                <div className="space-y-3">
-                  {currentOrders.map((item) => (
-                    <div key={item.id} className="flex items-center justify-between p-4 bg-primary-secondary rounded-xl shadow-md">
-                      <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 bg-primary-bg rounded-xl overflow-hidden">
-                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-primary-headline">{item.name}</h4>
-                          <p className="text-sm text-primary-paragraph">Số lượng: {item.quantity}</p>
-                          <p className="text-sm text-primary-button font-medium">{item.price.toLocaleString('vi-VN')}đ x {item.quantity}</p>
-                        </div>
+            {/* Order Items - Scrollable */}
+            <div className="mb-6">
+              <h3 className="text-xl font-bold text-primary-headline mb-4">Chi tiết đơn hàng</h3>
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {currentOrders.map((item) => (
+                  <div key={item.id} className="flex items-center justify-between p-4 bg-primary-secondary rounded-xl shadow-md">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-primary-bg rounded-xl overflow-hidden">
+                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                       </div>
-                      <div className="text-right">
-                        <p className="text-xl font-bold text-primary-button">
-                          {(item.price * item.quantity).toLocaleString('vi-VN')}đ
-                        </p>
+                      <div>
+                        <h4 className="font-bold text-primary-headline">{item.name}</h4>
+                        <p className="text-sm text-primary-paragraph">Số lượng: {item.quantity}</p>
+                        <p className="text-sm text-primary-button font-medium">{item.price.toLocaleString('vi-VN')}đ x {item.quantity}</p>
                       </div>
                     </div>
-                  ))}
-                </div>
+                    <div className="text-right">
+                      <p className="text-xl font-bold text-primary-button">
+                        {(item.price * item.quantity).toLocaleString('vi-VN')}đ
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              {/* Discount Section */}
-              <div className="mb-8">
-                <h3 className="text-xl font-bold text-primary-headline mb-4">Giảm giá</h3>
-                <div className="grid grid-cols-3 gap-3 mb-4">
-                  <button
-                    onClick={() => setDiscountType('none')}
-                    className={`p-3 rounded-xl font-medium transition-all shadow-md ${
-                      discountType === 'none' 
-                        ? 'bg-primary-button text-primary-main' 
-                        : 'bg-primary-secondary text-primary-button'
-                    }`}
-                  >
-                    Không giảm
-                  </button>
-                  <button
-                    onClick={() => setDiscountType('percent')}
-                    className={`p-3 rounded-xl font-medium transition-all shadow-md ${
-                      discountType === 'percent' 
-                        ? 'bg-primary-button text-primary-main' 
-                        : 'bg-primary-secondary text-primary-button'
-                    }`}
-                  >
-                    <Percent size={16} className="inline mr-1" />
-                    Theo %
-                  </button>
-                  <button
-                    onClick={() => setDiscountType('amount')}
-                    className={`p-3 rounded-xl font-medium transition-all shadow-md ${
-                      discountType === 'amount' 
-                        ? 'bg-primary-button text-primary-main' 
-                        : 'bg-primary-secondary text-primary-button'
-                    }`}
-                  >
-                    <DollarSign size={16} className="inline mr-1" />
-                    Số tiền
-                  </button>
+            {/* Discount Section */}
+            <div className="mb-6">
+              <h3 className="text-xl font-bold text-primary-headline mb-4">Giảm giá</h3>
+              <div className="grid grid-cols-3 gap-3 mb-4">
+                <button
+                  onClick={() => setDiscountType('none')}
+                  className={`p-3 rounded-xl font-medium transition-all shadow-md ${
+                    discountType === 'none' 
+                      ? 'bg-primary-button text-primary-main' 
+                      : 'bg-primary-secondary text-primary-button'
+                  }`}
+                >
+                  Không giảm
+                </button>
+                <button
+                  onClick={() => setDiscountType('percent')}
+                  className={`p-3 rounded-xl font-medium transition-all shadow-md ${
+                    discountType === 'percent' 
+                      ? 'bg-primary-button text-primary-main' 
+                      : 'bg-primary-secondary text-primary-button'
+                  }`}
+                >
+                  <Percent size={16} className="inline mr-1" />
+                  Theo %
+                </button>
+                <button
+                  onClick={() => setDiscountType('amount')}
+                  className={`p-3 rounded-xl font-medium transition-all shadow-md ${
+                    discountType === 'amount' 
+                      ? 'bg-primary-button text-primary-main' 
+                      : 'bg-primary-secondary text-primary-button'
+                  }`}
+                >
+                  <DollarSign size={16} className="inline mr-1" />
+                  Số tiền
+                </button>
+              </div>
+              
+              {discountType !== 'none' && (
+                <div className="flex items-center gap-3">
+                  <input
+                    type="number"
+                    value={discountValue}
+                    onChange={(e) => setDiscountValue(Number(e.target.value))}
+                    placeholder={discountType === 'percent' ? 'Nhập % giảm' : 'Nhập số tiền giảm'}
+                    className="flex-1 p-3 bg-primary-secondary rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
+                  />
+                  <span className="text-primary-paragraph">
+                    {discountType === 'percent' ? '%' : 'VND'}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Price Summary */}
+            <div className="bg-primary-secondary rounded-xl p-6 shadow-lg">
+              <div className="space-y-3">
+                <div className="flex justify-between text-lg">
+                  <span className="text-primary-paragraph">Tạm tính:</span>
+                  <span className="font-bold text-primary-headline">{subtotal.toLocaleString('vi-VN')}đ</span>
                 </div>
                 
-                {discountType !== 'none' && (
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="number"
-                      value={discountValue}
-                      onChange={(e) => setDiscountValue(Number(e.target.value))}
-                      placeholder={discountType === 'percent' ? 'Nhập % giảm' : 'Nhập số tiền giảm'}
-                      className="flex-1 p-3 bg-primary-secondary rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
-                    />
-                    <span className="text-primary-paragraph">
-                      {discountType === 'percent' ? '%' : 'VND'}
-                    </span>
+                {discountAmount > 0 && (
+                  <div className="flex justify-between text-lg text-red-600">
+                    <span>Giảm giá:</span>
+                    <span className="font-bold">-{discountAmount.toLocaleString('vi-VN')}đ</span>
                   </div>
                 )}
-              </div>
-
-              {/* Price Summary */}
-              <div className="bg-primary-secondary rounded-xl p-6 shadow-lg">
-                <div className="space-y-3">
-                  <div className="flex justify-between text-lg">
-                    <span className="text-primary-paragraph">Tạm tính:</span>
-                    <span className="font-bold text-primary-headline">{subtotal.toLocaleString('vi-VN')}đ</span>
-                  </div>
-                  
-                  {discountAmount > 0 && (
-                    <div className="flex justify-between text-lg text-red-600">
-                      <span>Giảm giá:</span>
-                      <span className="font-bold">-{discountAmount.toLocaleString('vi-VN')}đ</span>
-                    </div>
-                  )}
-                  
-                  <div className="border-t border-primary-stroke pt-3">
-                    <div className="flex justify-between text-2xl">
-                      <span className="font-bold text-primary-headline">Tổng cộng:</span>
-                      <span className="font-bold text-primary-button">{finalAmount.toLocaleString('vi-VN')}đ</span>
-                    </div>
+                
+                <div className="border-t border-primary-stroke pt-3">
+                  <div className="flex justify-between text-2xl">
+                    <span className="font-bold text-primary-headline">Tổng cộng:</span>
+                    <span className="font-bold text-primary-button">{finalAmount.toLocaleString('vi-VN')}đ</span>
                   </div>
                 </div>
               </div>
@@ -1484,22 +1452,22 @@ function App() {
           </div>
 
           {/* Right side - Payment options */}
-          <div className="w-96 bg-primary-main p-8 shadow-2xl">
-            <h2 className="text-2xl font-bold text-primary-headline mb-6">Phương thức thanh toán</h2>
+          <div className="w-80 bg-primary-secondary p-6 overflow-y-auto">
+            <h2 className="text-xl font-bold text-primary-headline mb-6">Phương thức thanh toán</h2>
             
             {/* Payment Method */}
             <div className="mb-6">
               <h3 className="text-lg font-bold text-primary-headline mb-3">Hình thức</h3>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3">
                 <button
                   onClick={() => setPaymentMethod('cash')}
                   className={`p-4 rounded-xl font-medium transition-all shadow-md ${
                     paymentMethod === 'cash' 
                       ? 'bg-primary-button text-primary-main' 
-                      : 'bg-primary-secondary text-primary-button'
+                      : 'bg-primary-main text-primary-button'
                   }`}
                 >
-                  <Banknote size={20} className="mx-auto mb-2" />
+                  <Banknote size={20} className="inline mr-2" />
                   Tiền mặt
                 </button>
                 <button
@@ -1507,10 +1475,10 @@ function App() {
                   className={`p-4 rounded-xl font-medium transition-all shadow-md ${
                     paymentMethod === 'transfer' 
                       ? 'bg-primary-button text-primary-main' 
-                      : 'bg-primary-secondary text-primary-button'
+                      : 'bg-primary-main text-primary-button'
                   }`}
                 >
-                  <CreditCard size={20} className="mx-auto mb-2" />
+                  <CreditCard size={20} className="inline mr-2" />
                   Chuyển khoản
                 </button>
               </div>
@@ -1535,7 +1503,7 @@ function App() {
                     value={paidAmount}
                     onChange={(e) => setPaidAmount(Number(e.target.value))}
                     placeholder="Số tiền thanh toán"
-                    className="w-full p-3 bg-primary-secondary rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
+                    className="w-full p-3 bg-primary-main rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
                   />
                   <div className="text-sm text-primary-paragraph">
                     <p>Còn lại: <span className="font-bold text-primary-tertiary">{getRemainingAmount().toLocaleString('vi-VN')}đ</span></p>
@@ -1545,14 +1513,14 @@ function App() {
             </div>
 
             {/* Quick Amount Buttons */}
-            <div className="mb-8">
+            <div className="mb-6">
               <h3 className="text-lg font-bold text-primary-headline mb-3">Số tiền nhanh</h3>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {[50000, 100000, 200000, 500000, 1000000, 2000000].map((amount) => (
                   <button
                     key={amount}
                     onClick={() => partialPayment ? setPaidAmount(amount) : null}
-                    className="p-2 bg-primary-secondary hover:bg-primary-button hover:text-primary-main rounded-lg text-sm font-medium transition-all shadow-md"
+                    className="p-2 bg-primary-main hover:bg-primary-button hover:text-primary-main rounded-lg text-sm font-medium transition-all shadow-md"
                   >
                     {(amount / 1000).toLocaleString('vi-VN')}k
                   </button>
@@ -1561,7 +1529,7 @@ function App() {
             </div>
 
             {/* Payment Actions */}
-            <div className="space-y-4">
+            <div className="space-y-3">
               <button
                 onClick={processPayment}
                 disabled={partialPayment && (paidAmount <= 0 || paidAmount > finalAmount)}
@@ -1573,7 +1541,7 @@ function App() {
               
               <button
                 onClick={() => setShowPaymentDialog(false)}
-                className="w-full bg-primary-secondary hover:bg-primary-paragraph text-primary-button py-3 rounded-xl font-bold transition-all shadow-md"
+                className="w-full bg-primary-main hover:bg-primary-paragraph text-primary-button py-3 rounded-xl font-bold transition-all shadow-md"
               >
                 Hủy bỏ
               </button>
@@ -1584,190 +1552,10 @@ function App() {
     );
   };
 
-  const PrintPreview = () => {
-    const currentOrders = getCurrentOrders();
-    const subtotal = getTotalAmount();
-    const discountAmount = getDiscountAmount();
-    const finalAmount = getFinalAmount();
-    const currentDate = new Date();
-
-    if (printType === 'bill') {
-      return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl p-8 m-4 w-full max-w-md shadow-2xl print-section">
-            <div className="text-center mb-6">
-              <h1 className="text-2xl font-bold">CASHAA RESTAURANT</h1>
-              <p className="text-sm text-gray-600">123 Đường ABC, Quận 1, TP.HCM</p>
-              <p className="text-sm text-gray-600">Tel: 0123.456.789</p>
-              <div className="border-t border-gray-300 mt-4 pt-4">
-                <h2 className="text-lg font-bold">HÓA ĐƠN THANH TOÁN</h2>
-              </div>
-            </div>
-
-            <div className="mb-6 text-sm">
-              <div className="flex justify-between mb-1">
-                <span>Ngày:</span>
-                <span>{currentDate.toLocaleDateString('vi-VN')}</span>
-              </div>
-              <div className="flex justify-between mb-1">
-                <span>Giờ:</span>
-                <span>{currentDate.toLocaleTimeString('vi-VN')}</span>
-              </div>
-              <div className="flex justify-between mb-1">
-                <span>Bàn:</span>
-                <span>{selectedTable === 'takeaway' ? 'Mang về' : `Bàn ${selectedTable}`}</span>
-              </div>
-              <div className="flex justify-between mb-1">
-                <span>Thu ngân:</span>
-                <span>Thu ngân A</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Hóa đơn số:</span>
-                <span>#{Math.random().toString(36).substr(2, 9).toUpperCase()}</span>
-              </div>
-            </div>
-
-            <div className="border-t border-gray-300 pt-4 mb-6">
-              <div className="space-y-2 text-sm">
-                {currentOrders.map((item, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between">
-                      <span className="font-medium">{item.name}</span>
-                      <span>{(item.price * item.quantity).toLocaleString('vi-VN')}đ</span>
-                    </div>
-                    <div className="text-gray-600 text-xs ml-2">
-                      {item.price.toLocaleString('vi-VN')}đ x {item.quantity}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="border-t border-gray-300 pt-4 text-sm">
-              <div className="flex justify-between mb-2">
-                <span>Tạm tính:</span>
-                <span>{subtotal.toLocaleString('vi-VN')}đ</span>
-              </div>
-              
-              {discountAmount > 0 && (
-                <div className="flex justify-between mb-2 text-red-600">
-                  <span>Giảm giá:</span>
-                  <span>-{discountAmount.toLocaleString('vi-VN')}đ</span>
-                </div>
-              )}
-              
-              <div className="border-t border-gray-300 pt-2 mt-2">
-                <div className="flex justify-between text-lg font-bold">
-                  <span>Tổng cộng:</span>
-                  <span>{finalAmount.toLocaleString('vi-VN')}đ</span>
-                </div>
-                <div className="flex justify-between text-sm mt-1">
-                  <span>Thanh toán:</span>
-                  <span>{paymentMethod === 'cash' ? 'Tiền mặt' : 'Chuyển khoản'}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-center mt-6 pt-4 border-t border-gray-300 text-xs text-gray-600">
-              <p>Cảm ơn quý khách đã sử dụng dịch vụ!</p>
-              <p>Hẹn gặp lại quý khách!</p>
-            </div>
-
-            <div className="flex gap-3 mt-6">
-              <button
-                onClick={handlePrint}
-                className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-bold"
-              >
-                <Printer size={16} className="inline mr-2" />
-                In hóa đơn
-              </button>
-              <button
-                onClick={() => setShowPrintPreview(false)}
-                className="flex-1 bg-gray-500 text-white py-2 rounded-lg font-bold"
-              >
-                Đóng
-              </button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // Kitchen Order Print
-    return (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-2xl p-8 m-4 w-full max-w-md shadow-2xl print-section">
-          <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold">CASHAA - BẾP</h1>
-            <h2 className="text-lg font-bold text-red-600">PHIẾU CHẾ BIẾN</h2>
-          </div>
-
-          <div className="mb-6 text-sm">
-            <div className="flex justify-between mb-1">
-              <span className="font-bold">Ngày giờ:</span>
-              <span>{currentDate.toLocaleString('vi-VN')}</span>
-            </div>
-            <div className="flex justify-between mb-1">
-              <span className="font-bold">Bàn:</span>
-              <span className="text-lg font-bold text-red-600">
-                {selectedTable === 'takeaway' ? 'MANG VỀ' : `BÀN ${selectedTable}`}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-bold">Phiếu số:</span>
-              <span>#{Math.random().toString(36).substr(2, 6).toUpperCase()}</span>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-300 pt-4 mb-6">
-            <h3 className="font-bold mb-3 text-center">DANH SÁCH MÓN</h3>
-            <div className="space-y-3">
-              {currentOrders.map((item, index) => (
-                <div key={index} className="border border-gray-300 p-3 rounded">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-bold text-lg">{item.name}</span>
-                    <span className="text-2xl font-bold text-red-600">x{item.quantity}</span>
-                  </div>
-                  {itemNotes[`${selectedTable}-${item.id}`] && (
-                    <div className="text-sm text-red-600 bg-yellow-100 p-2 rounded">
-                      <strong>Ghi chú:</strong> {itemNotes[`${selectedTable}-${item.id}`]}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {tableNotes[selectedTable] && (
-            <div className="bg-yellow-100 p-3 rounded mb-6">
-              <div className="font-bold text-red-600">GHI CHÚ CHUNG:</div>
-              <div className="text-sm">{tableNotes[selectedTable]}</div>
-            </div>
-          )}
-
-          <div className="text-center text-sm text-gray-600 mb-6">
-            <p>Tổng số món: <span className="font-bold">{currentOrders.reduce((sum, item) => sum + item.quantity, 0)}</span></p>
-          </div>
-
-          <div className="flex gap-3">
-            <button
-              onClick={handlePrint}
-              className="flex-1 bg-red-600 text-white py-2 rounded-lg font-bold"
-            >
-              <Printer size={16} className="inline mr-2" />
-              In phiếu bếp
-            </button>
-            <button
-              onClick={() => setShowPrintPreview(false)}
-              className="flex-1 bg-gray-500 text-white py-2 rounded-lg font-bold"
-            >
-              Đóng
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  // Show login page if not logged in
+  if (showLoginPage && !isLoggedIn) {
+    return <LoginPage />;
+  }
 
   return (
     <div className="h-screen bg-primary-bg flex overflow-hidden">
@@ -1783,8 +1571,8 @@ function App() {
         <OrderPanel />
       </div>
 
-      {/* Payment Page Modal */}
-      {showPaymentDialog && <PaymentPage />}
+      {/* Payment Dialog Modal */}
+      {showPaymentDialog && <PaymentDialog />}
 
       {/* Note Dialog */}
       {(showNoteDialog || showItemNoteDialog) && (
