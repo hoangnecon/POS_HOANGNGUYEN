@@ -234,6 +234,25 @@ function App() {
   const [showLoginPage, setShowLoginPage] = useState(true);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  
+  // Admin states
+  const [adminSection, setAdminSection] = useState('dashboard');
+  const [menuTypes, setMenuTypes] = useState(MENU_TYPES);
+  const [menuItems, setMenuItems] = useState(MENU_ITEMS);
+  const [showAddMenuDialog, setShowAddMenuDialog] = useState(false);
+  const [showEditMenuDialog, setShowEditMenuDialog] = useState(false);
+  const [showAddItemDialog, setShowAddItemDialog] = useState(false);
+  const [showEditItemDialog, setShowEditItemDialog] = useState(false);
+  const [selectedMenuType, setSelectedMenuType] = useState(null);
+  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
+  const [newMenuType, setNewMenuType] = useState('');
+  const [newMenuName, setNewMenuName] = useState('');
+  const [staffList, setStaffList] = useState([
+    { id: 1, name: 'Nguyễn Văn A', role: 'Thu ngân', status: 'active', joinDate: '2024-01-15' },
+    { id: 2, name: 'Trần Thị B', role: 'Bếp trưởng', status: 'active', joinDate: '2024-01-10' },
+    { id: 3, name: 'Lê Văn C', role: 'Phục vụ', status: 'active', joinDate: '2024-01-20' }
+  ]);
   
   // Dashboard states
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
