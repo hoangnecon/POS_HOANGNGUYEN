@@ -810,7 +810,7 @@ function App() {
           </div>
 
           {/* Recent Orders */}
-          <div className="bg-primary-main rounded-3xl p-6 border border-primary-stroke shadow-xl">
+          <div className="bg-primary-main rounded-3xl p-6 shadow-xl">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-primary-headline">Đơn hàng</h3>
               <span className="text-sm text-primary-paragraph">{filteredOrders.length} đơn hàng</span>
@@ -818,7 +818,7 @@ function App() {
             {filteredOrders.length > 0 ? (
               <div className="space-y-3 max-h-80 overflow-y-auto">
                 {filteredOrders.map((order) => (
-                  <div key={order.id} className="p-4 bg-primary-secondary rounded-xl border border-primary-stroke">
+                  <div key={order.id} className="p-4 bg-primary-secondary rounded-xl shadow-md">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
                         <span className="font-bold text-primary-headline">{order.id}</span>
