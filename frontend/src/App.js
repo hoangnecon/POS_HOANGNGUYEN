@@ -860,7 +860,7 @@ function App() {
         {/* Order Details Modal */}
         {showOrderDetails && selectedOrder && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-primary-main rounded-2xl p-6 m-4 w-full max-w-2xl border border-primary-stroke max-h-[80vh] overflow-y-auto">
+            <div className="bg-primary-main rounded-2xl p-6 m-4 w-full max-w-2xl shadow-2xl max-h-[80vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-2xl font-bold text-primary-headline">Chi tiết đơn hàng {selectedOrder.id}</h3>
                 <button
