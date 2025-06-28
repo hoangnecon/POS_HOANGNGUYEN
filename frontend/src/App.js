@@ -710,7 +710,7 @@ function App() {
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="px-4 py-2 bg-primary-main border border-primary-stroke rounded-xl text-primary-button focus:ring-2 focus:ring-primary-highlight"
+              className="px-4 py-2 bg-primary-main rounded-xl text-primary-button focus:ring-2 focus:ring-primary-highlight shadow-md"
             />
           </div>
           
