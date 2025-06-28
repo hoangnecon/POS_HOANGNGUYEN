@@ -5,21 +5,20 @@
 /* Color Palette from Design System */
 :root {
   /* Primary Colors from Design System */
-  --primary-bg: #f9f4ef;          /* Background */
-  --primary-headline: #020826;     /* Headline */
-  --primary-paragraph: #7f6040;    /* Paragraph */
-  --primary-button: #8c7851;       /* Button */
-  --primary-button-light: rgba(140, 120, 81, 0.15);  /* Light button for selected state */
+  --primary-bg: #ffffff;          /* Background */
+  --primary-headline: #000000;     /* Headline */
+  --primary-paragraph: #7d7a76;    /* Paragraph */
+  --primary-button: oklch(55.42% 0.15422 148.555);       /* Button */
+  --primary-button-light: oklch(87.1% 0.15 154.449);  /* Light button for selected state */
   --primary-button-text: #ffffff;  /* Button text */
   --primary-stroke: #020826;       /* Stroke */
   --primary-main: #ffffff;         /* Main */
-  --primary-highlight: #8c7851;    /* Highlight */
-  --primary-secondary: #eadcc1;    /* Secondary */
+  --primary-highlight: oklch(87.65% 0.10827 155.666);    /* Highlight */
+  --primary-secondary: #ebeeea;    /* Secondary */
   --primary-tertiary: #f25042;     /* Tertiary */
   
-  /* Sidebar colors */
-  --primary-900: #4a4169;
-  --primary-800: #5a4e7a;
+  --primary-600: oklch(55.42% 0.15422 148.555); 
+  --primary-200: oklch(71.097% 0.1357 153.472);
   
   /* Semantic Colors */
   --success: #10b981;
@@ -40,7 +39,7 @@
   --shadow-button-lg: 0 8px 16px rgba(140, 120, 81, 0.3);
   
   /* Sidebar gradient */
-  --sidebar-gradient: linear-gradient(180deg, var(--primary-900) 0%, var(--primary-800) 50%, var(--primary-900) 100%);
+  --sidebar-gradient: linear-gradient(180deg, var(--primary-600) 0%, var(--primary-200) 25%, var(--primary-600) 70%);
 }
 
 /* Global Reset & Base Styles */
