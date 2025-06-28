@@ -22,7 +22,14 @@ import {
   ChefHat,
   Coffee,
   Edit3,
-  MessageSquare
+  MessageSquare,
+  Eye,
+  PieChart,
+  TrendingUp,
+  Calendar,
+  DollarSign,
+  CreditCard,
+  Banknote
 } from 'lucide-react';
 import './App.css';
 
@@ -33,8 +40,6 @@ const MENU_ITEMS = [
     category: 'Phở', 
     price: 89000, 
     image: 'https://images.unsplash.com/photo-1533787761082-492a5b83e614?w=300&h=200&fit=crop',
-    description: 'Phở bò truyền thống với thịt bò tươi',
-    rating: 4.8,
     isPopular: true
   },
   { 
@@ -43,8 +48,6 @@ const MENU_ITEMS = [
     category: 'Phở', 
     price: 75000, 
     image: 'https://images.unsplash.com/photo-1590420882553-4f9150b71f92?w=300&h=200&fit=crop',
-    description: 'Phở gà thanh đạm hương vị Hà thành',
-    rating: 4.6,
     isPopular: false
   },
   { 
@@ -53,8 +56,6 @@ const MENU_ITEMS = [
     category: 'Bún', 
     price: 79000, 
     image: 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?w=300&h=200&fit=crop',
-    description: 'Bún bò cay nồng đậm đà miền Trung',
-    rating: 4.7,
     isPopular: true
   },
   { 
@@ -63,8 +64,6 @@ const MENU_ITEMS = [
     category: 'Bún', 
     price: 85000, 
     image: 'https://images.pexels.com/photos/2059153/pexels-photo-2059153.jpeg?w=300&h=200&fit=crop',
-    description: 'Chả nướng thơm lừng ăn kèm bún tươi',
-    rating: 4.9,
     isPopular: true
   },
   { 
@@ -73,8 +72,6 @@ const MENU_ITEMS = [
     category: 'Bánh', 
     price: 35000, 
     image: 'https://images.unsplash.com/photo-1600454309261-3dc9b7597637?w=300&h=200&fit=crop',
-    description: 'Bánh mì giòn với thịt nướng đậm đà',
-    rating: 4.5,
     isPopular: false
   },
   { 
@@ -83,8 +80,6 @@ const MENU_ITEMS = [
     category: 'Khai vị', 
     price: 45000, 
     image: 'https://images.pexels.com/photos/6646082/pexels-photo-6646082.jpeg?w=300&h=200&fit=crop',
-    description: 'Gỏi cuốn tươi mát với tôm và thịt',
-    rating: 4.4,
     isPopular: false
   },
   { 
@@ -93,8 +88,6 @@ const MENU_ITEMS = [
     category: 'Cơm', 
     price: 95000, 
     image: 'https://images.pexels.com/photos/6646037/pexels-photo-6646037.jpeg?w=300&h=200&fit=crop',
-    description: 'Cơm tấm với sườn nướng đặc biệt',
-    rating: 4.8,
     isPopular: true
   },
   { 
@@ -103,8 +96,6 @@ const MENU_ITEMS = [
     category: 'Đồ uống', 
     price: 25000, 
     image: 'https://images.unsplash.com/photo-1641440615059-42c8ed3af8c8?w=300&h=200&fit=crop',
-    description: 'Cà phê phin truyền thống đậm đà',
-    rating: 4.6,
     isPopular: true
   },
   { 
@@ -113,8 +104,6 @@ const MENU_ITEMS = [
     category: 'Đồ uống', 
     price: 39000, 
     image: 'https://images.unsplash.com/photo-1533787761082-492a5b83e614?w=300&h=200&fit=crop',
-    description: 'Trà sữa thái xanh thơm mát',
-    rating: 4.3,
     isPopular: false
   },
   { 
@@ -123,8 +112,6 @@ const MENU_ITEMS = [
     category: 'Tráng miệng', 
     price: 32000, 
     image: 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?w=300&h=200&fit=crop',
-    description: 'Chè ba màu truyền thống mát lạnh',
-    rating: 4.2,
     isPopular: false
   }
 ];
@@ -139,6 +126,76 @@ const CATEGORIES = [
   { id: 'Khai vị', name: 'Khai vị', icon: Heart },
   { id: 'Đồ uống', name: 'Đồ uống', icon: Coffee },
   { id: 'Tráng miệng', name: 'Tráng miệng', icon: Heart }
+];
+
+// Mock data for analytics
+const MOCK_ORDERS = [
+  {
+    id: 'ORD001',
+    tableNumber: 5,
+    date: '2024-01-15',
+    time: '14:30',
+    cashier: 'Nguyễn Văn A',
+    paymentMethod: 'cash',
+    total: 245000,
+    items: [
+      { name: 'Phở Bò Đặc Biệt', quantity: 2, price: 89000 },
+      { name: 'Cà Phê Đen Đá', quantity: 2, price: 25000 },
+      { name: 'Bánh Mì Thịt Nướng', quantity: 1, price: 35000 }
+    ]
+  },
+  {
+    id: 'ORD002',
+    tableNumber: 12,
+    date: '2024-01-15',
+    time: '15:45',
+    cashier: 'Trần Thị B',
+    paymentMethod: 'transfer',
+    total: 190000,
+    items: [
+      { name: 'Bún Bò Huế', quantity: 2, price: 79000 },
+      { name: 'Trà Sữa Thái Xanh', quantity: 1, price: 39000 }
+    ]
+  },
+  {
+    id: 'ORD003',
+    tableNumber: 8,
+    date: '2024-01-15',
+    time: '16:20',
+    cashier: 'Lê Văn C',
+    paymentMethod: 'cash',
+    total: 180000,
+    items: [
+      { name: 'Bún Chả Hà Nội', quantity: 2, price: 85000 },
+      { name: 'Cà Phê Đen Đá', quantity: 1, price: 25000 }
+    ]
+  },
+  {
+    id: 'ORD004',
+    tableNumber: 3,
+    date: '2024-01-15',
+    time: '17:10',
+    cashier: 'Phạm Thị D',
+    paymentMethod: 'transfer',
+    total: 320000,
+    items: [
+      { name: 'Cơm Tấm Sài Gòn', quantity: 2, price: 95000 },
+      { name: 'Phở Bò Đặc Biệt', quantity: 1, price: 89000 },
+      { name: 'Gỏi Cuốn Tôm Thịt', quantity: 1, price: 45000 }
+    ]
+  },
+  {
+    id: 'ORD005',
+    tableNumber: 15,
+    date: '2024-01-15',
+    time: '18:30',
+    cashier: 'Hoàng Văn E',
+    paymentMethod: 'cash',
+    total: 150000,
+    items: [
+      { name: 'Phở Gà Hà Nội', quantity: 2, price: 75000 }
+    ]
+  }
 ];
 
 function App() {
@@ -156,6 +213,12 @@ function App() {
   const [currentNoteTarget, setCurrentNoteTarget] = useState(null);
   const [noteInput, setNoteInput] = useState('');
   const [showItemNoteDialog, setShowItemNoteDialog] = useState(false);
+  
+  // Dashboard states
+  const [showChart, setShowChart] = useState(true);
+  const [paymentFilter, setPaymentFilter] = useState('all');
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showOrderDetails, setShowOrderDetails] = useState(false);
 
   // Initialize tables
   const [tables, setTables] = useState(() => {
@@ -203,7 +266,6 @@ function App() {
         ...orders,
         [selectedTable]: (orders[selectedTable] || []).filter(item => item.id !== itemId)
       });
-      // Remove item note when item is removed
       const itemKey = `${selectedTable}-${itemId}`;
       const newItemNotes = { ...itemNotes };
       delete newItemNotes[itemKey];
@@ -255,9 +317,13 @@ function App() {
     setShowItemNoteDialog(true);
   };
 
+  const openOrderDetails = (order) => {
+    setSelectedOrder(order);
+    setShowOrderDetails(true);
+  };
+
   const filteredMenuItems = MENU_ITEMS.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         item.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
     
     if (selectedCategory === 'all') return matchesSearch;
     if (selectedCategory === 'popular') return matchesSearch && item.isPopular;
@@ -268,6 +334,37 @@ function App() {
 
   const getRecentMenuItems = () => {
     return recentItems.map(id => MENU_ITEMS.find(item => item.id === id)).filter(Boolean);
+  };
+
+  const getFilteredOrders = () => {
+    if (paymentFilter === 'all') return MOCK_ORDERS;
+    return MOCK_ORDERS.filter(order => order.paymentMethod === paymentFilter);
+  };
+
+  const getRevenueByPayment = () => {
+    const cashRevenue = MOCK_ORDERS
+      .filter(order => order.paymentMethod === 'cash')
+      .reduce((sum, order) => sum + order.total, 0);
+    
+    const transferRevenue = MOCK_ORDERS
+      .filter(order => order.paymentMethod === 'transfer')
+      .reduce((sum, order) => sum + order.total, 0);
+    
+    return { cash: cashRevenue, transfer: transferRevenue };
+  };
+
+  const getBestSellingItems = () => {
+    const itemCount = {};
+    MOCK_ORDERS.forEach(order => {
+      order.items.forEach(item => {
+        itemCount[item.name] = (itemCount[item.name] || 0) + item.quantity;
+      });
+    });
+    
+    return Object.entries(itemCount)
+      .sort(([,a], [,b]) => b - a)
+      .slice(0, 5)
+      .map(([name, count]) => ({ name, count }));
   };
 
   const Sidebar = () => (
@@ -283,8 +380,8 @@ function App() {
           onClick={() => setActiveSection('tables')}
           className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
             activeSection === 'tables' 
-              ? 'bg-white text-primary-600 shadow-lg' 
-              : 'text-white/70 hover:text-white hover:bg-white/10'
+              ? 'bg-primary-button text-white shadow-lg' 
+              : 'bg-primary-button text-white/70 hover:text-white hover:bg-primary-highlight'
           }`}
         >
           <Home size={22} />
@@ -297,8 +394,8 @@ function App() {
           onClick={() => setActiveSection('menu')}
           className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
             activeSection === 'menu' 
-              ? 'bg-white text-primary-600 shadow-lg' 
-              : 'text-white/70 hover:text-white hover:bg-white/10'
+              ? 'bg-primary-button text-white shadow-lg' 
+              : 'bg-primary-button text-white/70 hover:text-white hover:bg-primary-highlight'
           }`}
         >
           <UtensilsCrossed size={22} />
@@ -311,8 +408,8 @@ function App() {
           onClick={() => setActiveSection('dashboard')}
           className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
             activeSection === 'dashboard' 
-              ? 'bg-white text-primary-600 shadow-lg' 
-              : 'text-white/70 hover:text-white hover:bg-white/10'
+              ? 'bg-primary-button text-white shadow-lg' 
+              : 'bg-primary-button text-white/70 hover:text-white hover:bg-primary-highlight'
           }`}
         >
           <BarChart3 size={22} />
@@ -324,13 +421,13 @@ function App() {
       
       {/* Secondary Navigation */}
       <div className="flex-1 flex flex-col justify-end space-y-4">
-        <button className="w-14 h-14 rounded-2xl text-white/50 hover:text-white/80 hover:bg-white/10 flex items-center justify-center transition-all duration-300">
+        <button className="w-14 h-14 rounded-2xl bg-primary-button text-white/50 hover:text-white/80 hover:bg-primary-highlight flex items-center justify-center transition-all duration-300">
           <Settings size={22} />
         </button>
-        <button className="w-14 h-14 rounded-2xl text-white/50 hover:text-white/80 hover:bg-white/10 flex items-center justify-center transition-all duration-300">
+        <button className="w-14 h-14 rounded-2xl bg-primary-button text-white/50 hover:text-white/80 hover:bg-primary-highlight flex items-center justify-center transition-all duration-300">
           <LogOut size={22} />
         </button>
-        <button className="w-14 h-14 rounded-2xl text-white/50 hover:text-white/80 hover:bg-white/10 flex items-center justify-center transition-all duration-300">
+        <button className="w-14 h-14 rounded-2xl bg-primary-button text-white/50 hover:text-white/80 hover:bg-primary-highlight flex items-center justify-center transition-all duration-300">
           <User size={22} />
         </button>
       </div>
@@ -442,14 +539,8 @@ function App() {
                   </div>
                 )}
               </div>
-              <p className="text-sm text-primary-paragraph mb-3">{item.description}</p>
-              <div className="flex items-center justify-between">
-                <p className="text-primary-button font-bold text-xl">{item.price.toLocaleString('vi-VN')}đ</p>
-                <div className="flex items-center text-primary-highlight">
-                  <Star size={14} className="fill-current" />
-                  <span className="text-xs text-primary-paragraph ml-1">{item.rating}</span>
-                </div>
-              </div>
+              <p className="text-sm text-primary-button font-medium mb-3">{item.category}</p>
+              <p className="text-primary-button font-bold text-xl">{item.price.toLocaleString('vi-VN')}đ</p>
             </div>
           ))}
         </div>
@@ -522,15 +613,7 @@ function App() {
               )}
             </div>
             
-            <div className="flex items-start justify-between mb-2">
-              <h3 className="font-bold text-primary-headline text-lg flex-1">{item.name}</h3>
-              <div className="flex items-center text-primary-highlight ml-2">
-                <Star size={14} className="fill-current" />
-                <span className="text-xs text-primary-paragraph ml-1">{item.rating}</span>
-              </div>
-            </div>
-            
-            <p className="text-sm text-primary-paragraph mb-3 line-clamp-2">{item.description}</p>
+            <h3 className="font-bold text-primary-headline text-lg mb-2">{item.name}</h3>
             <p className="text-sm text-primary-button font-medium mb-4">{item.category}</p>
             
             <div className="flex items-center justify-between">
@@ -545,89 +628,251 @@ function App() {
     </div>
   );
 
-  const Dashboard = () => (
-    <div className="p-8 h-full overflow-y-auto bg-primary-bg">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-primary-headline mb-3">
-          Bảng điều khiển
-        </h1>
-        <p className="text-primary-paragraph text-lg">Tổng quan hoạt động nhà hàng</p>
-      </div>
+  const Dashboard = () => {
+    const revenueData = getRevenueByPayment();
+    const bestSelling = getBestSellingItems();
+    const filteredOrders = getFilteredOrders();
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        <div className="bg-primary-main rounded-3xl p-8 border border-primary-stroke shadow-xl">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold text-primary-headline">Doanh thu hôm nay</h3>
-            <div className="w-12 h-12 bg-primary-highlight rounded-2xl flex items-center justify-center">
-              <BarChart3 size={24} className="text-primary-main" />
-            </div>
-          </div>
-          <p className="text-4xl font-bold text-primary-headline mb-3">3,250,000đ</p>
-          <p className="text-sm text-primary-highlight flex items-center">
-            <span className="text-primary-tertiary">↗</span>
-            <span className="ml-1">+15.5% từ hôm qua</span>
-          </p>
+    return (
+      <div className="p-8 h-full overflow-y-auto bg-primary-bg">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-primary-headline mb-3">
+            Bảng điều khiển
+          </h1>
+          <p className="text-primary-paragraph text-lg">Tổng quan hoạt động nhà hàng</p>
         </div>
 
-        <div className="bg-primary-main rounded-3xl p-8 border border-primary-stroke shadow-xl">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold text-primary-headline">Đơn hàng</h3>
-            <div className="w-12 h-12 bg-primary-button rounded-2xl flex items-center justify-center">
-              <Receipt size={24} className="text-primary-main" />
-            </div>
-          </div>
-          <p className="text-4xl font-bold text-primary-headline mb-3">184</p>
-          <p className="text-sm text-primary-button flex items-center">
-            <span className="text-primary-tertiary">↗</span>
-            <span className="ml-1">+12% từ hôm qua</span>
-          </p>
+        {/* Controls */}
+        <div className="flex gap-4 mb-8">
+          <button
+            onClick={() => setShowChart(!showChart)}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-semibold transition-all border ${
+              showChart 
+                ? 'bg-primary-button text-primary-main border-primary-button' 
+                : 'bg-primary-main text-primary-button border-primary-stroke hover:bg-primary-secondary'
+            }`}
+          >
+            <PieChart size={18} />
+            {showChart ? 'Ẩn biểu đồ' : 'Hiện biểu đồ'}
+          </button>
+          
+          <select
+            value={paymentFilter}
+            onChange={(e) => setPaymentFilter(e.target.value)}
+            className="px-4 py-2 bg-primary-main border border-primary-stroke rounded-xl text-primary-button focus:ring-2 focus:ring-primary-highlight"
+          >
+            <option value="all">Tất cả thanh toán</option>
+            <option value="cash">Tiền mặt</option>
+            <option value="transfer">Chuyển khoản</option>
+          </select>
         </div>
 
-        <div className="bg-primary-main rounded-3xl p-8 border border-primary-stroke shadow-xl">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl font-bold text-primary-headline">Bàn hoạt động</h3>
-            <div className="w-12 h-12 bg-primary-tertiary rounded-2xl flex items-center justify-center">
-              <Users size={24} className="text-primary-main" />
-            </div>
-          </div>
-          <p className="text-4xl font-bold text-primary-headline mb-3">{Object.values(tables).filter(t => t.status === 'occupied').length}/32</p>
-          <p className="text-sm text-primary-tertiary flex items-center">
-            <span className="text-primary-tertiary">◐</span>
-            <span className="ml-1">22% công suất</span>
-          </p>
-        </div>
-      </div>
-
-      {/* Tables Overview */}
-      <div className="bg-primary-main rounded-3xl p-8 border border-primary-stroke shadow-xl">
-        <h3 className="text-2xl font-bold text-primary-headline mb-6">Trạng thái bàn chi tiết</h3>
-        <div className="grid grid-cols-8 gap-3">
-          {Object.values(tables).slice(0, 32).map((table) => (
-            <div
-              key={table.id}
-              className={`aspect-square rounded-2xl flex flex-col items-center justify-center text-sm transition-all duration-300 border-2 ${
-                table.status === 'occupied'
-                  ? 'bg-primary-tertiary text-primary-main shadow-lg border-primary-tertiary'
-                  : 'bg-primary-highlight text-primary-main shadow-lg border-primary-highlight'
-              }`}
-            >
-              <div className="text-base mb-1">
-                {table.status === 'occupied' ? '🟢' : '⚪'}
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div className="bg-primary-main rounded-3xl p-6 border border-primary-stroke shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-primary-headline">Tổng doanh thu</h3>
+              <div className="w-10 h-10 bg-primary-highlight rounded-2xl flex items-center justify-center">
+                <DollarSign size={20} className="text-primary-main" />
               </div>
-              <div className="font-bold">{table.id}</div>
-              {table.status === 'occupied' && (
-                <div className="text-xs opacity-80 mt-1">
-                  {table.customers}
-                </div>
-              )}
             </div>
-          ))}
+            <p className="text-3xl font-bold text-primary-headline mb-2">
+              {(revenueData.cash + revenueData.transfer).toLocaleString('vi-VN')}đ
+            </p>
+            <p className="text-sm text-primary-highlight">+15.5% từ hôm qua</p>
+          </div>
+
+          <div className="bg-primary-main rounded-3xl p-6 border border-primary-stroke shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-primary-headline">Tiền mặt</h3>
+              <div className="w-10 h-10 bg-primary-button rounded-2xl flex items-center justify-center">
+                <Banknote size={20} className="text-primary-main" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-primary-headline mb-2">
+              {revenueData.cash.toLocaleString('vi-VN')}đ
+            </p>
+            <p className="text-sm text-primary-button">
+              {MOCK_ORDERS.filter(o => o.paymentMethod === 'cash').length} đơn hàng
+            </p>
+          </div>
+
+          <div className="bg-primary-main rounded-3xl p-6 border border-primary-stroke shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-primary-headline">Chuyển khoản</h3>
+              <div className="w-10 h-10 bg-primary-tertiary rounded-2xl flex items-center justify-center">
+                <CreditCard size={20} className="text-primary-main" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-primary-headline mb-2">
+              {revenueData.transfer.toLocaleString('vi-VN')}đ
+            </p>
+            <p className="text-sm text-primary-tertiary">
+              {MOCK_ORDERS.filter(o => o.paymentMethod === 'transfer').length} đơn hàng
+            </p>
+          </div>
+
+          <div className="bg-primary-main rounded-3xl p-6 border border-primary-stroke shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-primary-headline">Tổng đơn hàng</h3>
+              <div className="w-10 h-10 bg-primary-secondary rounded-2xl flex items-center justify-center">
+                <Receipt size={20} className="text-primary-button" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-primary-headline mb-2">{MOCK_ORDERS.length}</p>
+            <p className="text-sm text-primary-paragraph">Hôm nay</p>
+          </div>
         </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Best Selling Items */}
+          <div className="bg-primary-main rounded-3xl p-6 border border-primary-stroke shadow-xl">
+            <h3 className="text-xl font-bold text-primary-headline mb-6">Món bán chạy nhất</h3>
+            <div className="space-y-4">
+              {bestSelling.map((item, index) => (
+                <div key={item.name} className="flex items-center justify-between p-3 bg-primary-secondary rounded-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-primary-button rounded-full flex items-center justify-center text-primary-main font-bold text-sm">
+                      {index + 1}
+                    </div>
+                    <span className="font-medium text-primary-headline">{item.name}</span>
+                  </div>
+                  <span className="font-bold text-primary-button">{item.count} phần</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Recent Orders */}
+          <div className="bg-primary-main rounded-3xl p-6 border border-primary-stroke shadow-xl">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-primary-headline">Đơn hàng gần đây</h3>
+              <span className="text-sm text-primary-paragraph">{filteredOrders.length} đơn hàng</span>
+            </div>
+            <div className="space-y-3 max-h-80 overflow-y-auto">
+              {filteredOrders.map((order) => (
+                <div key={order.id} className="p-4 bg-primary-secondary rounded-xl border border-primary-stroke">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <span className="font-bold text-primary-headline">{order.id}</span>
+                      <span className="text-sm text-primary-paragraph">Bàn {order.tableNumber}</span>
+                    </div>
+                    <button
+                      onClick={() => openOrderDetails(order)}
+                      className="text-primary-button hover:text-primary-highlight transition-colors"
+                    >
+                      <Eye size={16} />
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      {order.paymentMethod === 'cash' ? (
+                        <Banknote size={14} className="text-primary-button" />
+                      ) : (
+                        <CreditCard size={14} className="text-primary-tertiary" />
+                      )}
+                      <span className="text-sm text-primary-paragraph">
+                        {order.paymentMethod === 'cash' ? 'Tiền mặt' : 'Chuyển khoản'}
+                      </span>
+                    </div>
+                    <span className="font-bold text-primary-button">{order.total.toLocaleString('vi-VN')}đ</span>
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-primary-paragraph">
+                    <span>{order.date} • {order.time}</span>
+                    <span>Thu ngân: {order.cashier}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Order Details Modal */}
+        {showOrderDetails && selectedOrder && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-primary-main rounded-2xl p-6 m-4 w-full max-w-2xl border border-primary-stroke max-h-[80vh] overflow-y-auto">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold text-primary-headline">Chi tiết đơn hàng {selectedOrder.id}</h3>
+                <button
+                  onClick={() => setShowOrderDetails(false)}
+                  className="text-primary-paragraph hover:text-primary-headline"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-6 mb-6">
+                <div>
+                  <h4 className="font-bold text-primary-headline mb-3">Thông tin đơn hàng</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-primary-paragraph">Mã đơn:</span>
+                      <span className="font-medium text-primary-headline">{selectedOrder.id}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-primary-paragraph">Bàn số:</span>
+                      <span className="font-medium text-primary-headline">{selectedOrder.tableNumber}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-primary-paragraph">Ngày giờ:</span>
+                      <span className="font-medium text-primary-headline">{selectedOrder.date} {selectedOrder.time}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-primary-paragraph">Thu ngân:</span>
+                      <span className="font-medium text-primary-headline">{selectedOrder.cashier}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-primary-paragraph">Thanh toán:</span>
+                      <div className="flex items-center gap-1">
+                        {selectedOrder.paymentMethod === 'cash' ? (
+                          <Banknote size={14} className="text-primary-button" />
+                        ) : (
+                          <CreditCard size={14} className="text-primary-tertiary" />
+                        )}
+                        <span className="font-medium text-primary-headline">
+                          {selectedOrder.paymentMethod === 'cash' ? 'Tiền mặt' : 'Chuyển khoản'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="font-bold text-primary-headline mb-3">Tổng kết</h4>
+                  <div className="bg-primary-secondary rounded-xl p-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg font-bold text-primary-headline">Tổng cộng:</span>
+                      <span className="text-2xl font-bold text-primary-button">
+                        {selectedOrder.total.toLocaleString('vi-VN')}đ
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-bold text-primary-headline mb-3">Chi tiết món ăn</h4>
+                <div className="space-y-3">
+                  {selectedOrder.items.map((item, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-primary-secondary rounded-xl">
+                      <div>
+                        <span className="font-medium text-primary-headline">{item.name}</span>
+                        <span className="text-sm text-primary-paragraph ml-2">x{item.quantity}</span>
+                      </div>
+                      <span className="font-bold text-primary-button">
+                        {(item.price * item.quantity).toLocaleString('vi-VN')}đ
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
-  );
+    );
+  };
 
   const OrderPanel = () => {
     const currentOrders = getCurrentOrders();
@@ -685,7 +930,6 @@ function App() {
                             <X size={14} />
                           </button>
                         </div>
-                        <p className="text-xs text-primary-paragraph mb-2">{item.description}</p>
                         
                         {/* Item Note */}
                         {itemNote ? (
