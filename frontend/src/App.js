@@ -33,7 +33,13 @@ import {
   ArrowLeft,
   Check,
   Percent,
-  Calculator
+  Calculator,
+  Shield,
+  UserCheck,
+  Package,
+  Image,
+  Save,
+  Upload
 } from 'lucide-react';
 import './App.css';
 
@@ -234,23 +240,6 @@ function App() {
   const [showLoginPage, setShowLoginPage] = useState(true);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  
-  // Admin states
-  const [adminSection, setAdminSection] = useState('dashboard');
-  const [menuTypes, setMenuTypes] = useState(MENU_TYPES);
-  const [menuItems, setMenuItems] = useState(MENU_ITEMS);
-  const [showAddMenuDialog, setShowAddMenuDialog] = useState(false);
-  const [showEditMenuDialog, setShowEditMenuDialog] = useState(false);
-  const [showAddItemDialog, setShowAddItemDialog] = useState(false);
-  const [showEditItemDialog, setShowEditItemDialog] = useState(false);
-  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
-  const [newMenuType, setNewMenuType] = useState('');
-  const [newMenuName, setNewMenuName] = useState('');
-  const [staffList, setStaffList] = useState([
-    { id: 1, name: 'Nguyễn Văn A', role: 'Thu ngân', status: 'active', joinDate: '2024-01-15' },
-    { id: 2, name: 'Trần Thị B', role: 'Bếp trưởng', status: 'active', joinDate: '2024-01-10' },
-    { id: 3, name: 'Lê Văn C', role: 'Phục vụ', status: 'active', joinDate: '2024-01-20' }
-  ]);
   const [isAdmin, setIsAdmin] = useState(false);
   
   // Admin states
@@ -261,44 +250,7 @@ function App() {
   const [showEditMenuDialog, setShowEditMenuDialog] = useState(false);
   const [showAddItemDialog, setShowAddItemDialog] = useState(false);
   const [showEditItemDialog, setShowEditItemDialog] = useState(false);
-  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
-  const [newMenuType, setNewMenuType] = useState('');
-  const [newMenuName, setNewMenuName] = useState('');
-  const [staffList, setStaffList] = useState([
-    { id: 1, name: 'Nguyễn Văn A', role: 'Thu ngân', status: 'active', joinDate: '2024-01-15' },
-    { id: 2, name: 'Trần Thị B', role: 'Bếp trưởng', status: 'active', joinDate: '2024-01-10' },
-    { id: 3, name: 'Lê Văn C', role: 'Phục vụ', status: 'active', joinDate: '2024-01-20' }
-  ]);
-  const [isAdmin, setIsAdmin] = useState(false);
-  
-  // Admin states
-  const [adminSection, setAdminSection] = useState('dashboard');
-  const [menuTypes, setMenuTypes] = useState(MENU_TYPES);
-  const [menuItems, setMenuItems] = useState(MENU_ITEMS);
-  const [showAddMenuDialog, setShowAddMenuDialog] = useState(false);
-  const [showEditMenuDialog, setShowEditMenuDialog] = useState(false);
-  const [showAddItemDialog, setShowAddItemDialog] = useState(false);
-  const [showEditItemDialog, setShowEditItemDialog] = useState(false);
-  const [selectedMenuType, setSelectedMenuType] = useState(null);
-  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
-  const [newMenuType, setNewMenuType] = useState('');
-  const [newMenuName, setNewMenuName] = useState('');
-  const [staffList, setStaffList] = useState([
-    { id: 1, name: 'Nguyễn Văn A', role: 'Thu ngân', status: 'active', joinDate: '2024-01-15' },
-    { id: 2, name: 'Trần Thị B', role: 'Bếp trưởng', status: 'active', joinDate: '2024-01-10' },
-    { id: 3, name: 'Lê Văn C', role: 'Phục vụ', status: 'active', joinDate: '2024-01-20' }
-  ]);
-  const [isAdmin, setIsAdmin] = useState(false);
-  
-  // Admin states
-  const [adminSection, setAdminSection] = useState('dashboard');
-  const [menuTypes, setMenuTypes] = useState(MENU_TYPES);
-  const [menuItems, setMenuItems] = useState(MENU_ITEMS);
-  const [showAddMenuDialog, setShowAddMenuDialog] = useState(false);
-  const [showEditMenuDialog, setShowEditMenuDialog] = useState(false);
-  const [showAddItemDialog, setShowAddItemDialog] = useState(false);
-  const [showEditItemDialog, setShowEditItemDialog] = useState(false);
-  const [selectedMenuType, setSelectedMenuType] = useState(null);
+  const [selectedMenuTypeEdit, setSelectedMenuTypeEdit] = useState(null);
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
   const [newMenuType, setNewMenuType] = useState('');
   const [newMenuName, setNewMenuName] = useState('');
@@ -333,6 +285,10 @@ function App() {
     if (loginEmail && loginPassword) {
       setIsLoggedIn(true);
       setShowLoginPage(false);
+      // Check if admin login
+      if (loginEmail.includes('admin') || loginPassword.includes('admin')) {
+        setIsAdmin(true);
+      }
       setLoginEmail('');
       setLoginPassword('');
     }
@@ -340,15 +296,59 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setIsAdmin(false);
     setShowLoginPage(true);
     setSelectedTable(null);
     setOrders({});
     setActiveSection('tables');
+    setAdminSection('dashboard');
   };
 
   const handleAdminLogin = () => {
     // For admin direct access
-    setShowLoginPage(true);
+    setIsAdmin(true);
+    setIsLoggedIn(true);
+    setShowLoginPage(false);
+  };
+
+  // Admin functions
+  const addMenuType = () => {
+    if (newMenuType && newMenuName) {
+      const newMenu = {
+        id: newMenuType.toLowerCase().replace(/\s+/g, ''),
+        name: newMenuName
+      };
+      setMenuTypes([...menuTypes, newMenu]);
+      setNewMenuType('');
+      setNewMenuName('');
+      setShowAddMenuDialog(false);
+    }
+  };
+
+  const deleteMenuType = (menuTypeId) => {
+    setMenuTypes(menuTypes.filter(menu => menu.id !== menuTypeId));
+    // Also remove all items of this menu type
+    setMenuItems(menuItems.filter(item => item.menuType !== menuTypeId));
+  };
+
+  const addMenuItem = (itemData) => {
+    const newItem = {
+      ...itemData,
+      id: Math.max(...menuItems.map(item => item.id)) + 1
+    };
+    setMenuItems([...menuItems, newItem]);
+    setShowAddItemDialog(false);
+  };
+
+  const updateMenuItem = (itemId, itemData) => {
+    setMenuItems(menuItems.map(item => 
+      item.id === itemId ? { ...item, ...itemData } : item
+    ));
+    setShowEditItemDialog(false);
+  };
+
+  const deleteMenuItem = (itemId) => {
+    setMenuItems(menuItems.filter(item => item.id !== itemId));
   };
 
   const addToOrder = (item) => {
@@ -517,7 +517,7 @@ function App() {
     setShowOrderDetails(true);
   };
 
-  const filteredMenuItems = MENU_ITEMS.filter(item => {
+  const filteredMenuItems = menuItems.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesMenuType = item.menuType === selectedMenuType;
     
@@ -529,7 +529,7 @@ function App() {
   });
 
   const getRecentMenuItems = () => {
-    return recentItems.map(id => MENU_ITEMS.find(item => item.id === id)).filter(Boolean).slice(0, 6);
+    return recentItems.map(id => menuItems.find(item => item.id === id)).filter(Boolean).slice(0, 6);
   };
 
   const getOrdersForDate = () => {
@@ -633,10 +633,10 @@ function App() {
           </div>
 
           <button 
-            onClick={() => setShowLoginPage(false)}
+            onClick={handleAdminLogin}
             className="w-full bg-gray-700 text-white py-3 rounded-lg font-medium hover:bg-gray-600 transition-colors flex items-center justify-center gap-2"
           >
-            <span>🔑</span>
+            <Shield size={20} />
             Login as Admin
           </button>
 
@@ -645,6 +645,687 @@ function App() {
             <button className="text-white hover:text-orange-400">Sign up</button>
           </div>
         </div>
+      </div>
+    </div>
+  );
+
+  // Admin Sidebar
+  const AdminSidebar = () => (
+    <div className="w-20 bg-gradient-to-b from-purple-900 to-purple-800 flex flex-col items-center py-8 shadow-2xl">
+      {/* Logo */}
+      <div className="w-14 h-14 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-10 border border-white/20">
+        <Shield className="text-white" size={24} />
+      </div>
+      
+      {/* Main Navigation */}
+      <div className="flex flex-col space-y-4 mb-10">
+        <button
+          onClick={() => setAdminSection('dashboard')}
+          className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
+            adminSection === 'dashboard' 
+              ? 'bg-purple-600 text-white shadow-lg' 
+              : 'bg-purple-700 text-white/70 hover:text-white hover:bg-purple-600'
+          }`}
+        >
+          <BarChart3 size={22} />
+          {adminSection === 'dashboard' && (
+            <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-full" />
+          )}
+        </button>
+        
+        <button
+          onClick={() => setAdminSection('menus')}
+          className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
+            adminSection === 'menus' 
+              ? 'bg-purple-600 text-white shadow-lg' 
+              : 'bg-purple-700 text-white/70 hover:text-white hover:bg-purple-600'
+          }`}
+        >
+          <Package size={22} />
+          {adminSection === 'menus' && (
+            <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-full" />
+          )}
+        </button>
+        
+        <button
+          onClick={() => setAdminSection('items')}
+          className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
+            adminSection === 'items' 
+              ? 'bg-purple-600 text-white shadow-lg' 
+              : 'bg-purple-700 text-white/70 hover:text-white hover:bg-purple-600'
+          }`}
+        >
+          <UtensilsCrossed size={22} />
+          {adminSection === 'items' && (
+            <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-full" />
+          )}
+        </button>
+
+        <button
+          onClick={() => setAdminSection('staff')}
+          className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
+            adminSection === 'staff' 
+              ? 'bg-purple-600 text-white shadow-lg' 
+              : 'bg-purple-700 text-white/70 hover:text-white hover:bg-purple-600'
+          }`}
+        >
+          <Users size={22} />
+          {adminSection === 'staff' && (
+            <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-full" />
+          )}
+        </button>
+      </div>
+      
+      {/* Secondary Navigation */}
+      <div className="flex-1 flex flex-col justify-end space-y-4">
+        <button className="w-14 h-14 rounded-2xl bg-purple-700 text-white/50 hover:text-white/80 hover:bg-purple-600 flex items-center justify-center transition-all duration-300">
+          <Settings size={22} />
+        </button>
+        <button 
+          onClick={handleLogout}
+          className="w-14 h-14 rounded-2xl bg-purple-700 text-white/50 hover:text-white/80 hover:bg-purple-600 flex items-center justify-center transition-all duration-300"
+        >
+          <LogOut size={22} />
+        </button>
+        <button className="w-14 h-14 rounded-2xl bg-purple-700 text-white/50 hover:text-white/80 hover:bg-purple-600 flex items-center justify-center transition-all duration-300">
+          <User size={22} />
+        </button>
+      </div>
+    </div>
+  );
+
+  // Admin Dashboard
+  const AdminDashboard = () => {
+    const revenueData = getRevenueByPayment();
+    const bestSelling = getBestSellingItems();
+    const filteredOrders = getFilteredOrders();
+    const ordersForDate = getOrdersForDate();
+    const totalRevenue = revenueData.cash + revenueData.transfer;
+
+    return (
+      <div className="p-8 h-full overflow-y-auto bg-gray-50">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-3">
+            Admin Dashboard
+          </h1>
+          <p className="text-gray-600 text-lg">Quản lý tổng quan hệ thống</p>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white rounded-3xl p-6 shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-gray-900">Tổng doanh thu</h3>
+              <div className="w-10 h-10 bg-green-500 rounded-2xl flex items-center justify-center">
+                <DollarSign size={20} className="text-white" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-gray-900 mb-2">
+              {totalRevenue.toLocaleString('vi-VN')}đ
+            </p>
+            <p className="text-sm text-green-600">+12% so với hôm qua</p>
+          </div>
+
+          <div className="bg-white rounded-3xl p-6 shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-gray-900">Tổng đơn hàng</h3>
+              <div className="w-10 h-10 bg-blue-500 rounded-2xl flex items-center justify-center">
+                <Receipt size={20} className="text-white" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-gray-900 mb-2">{ordersForDate.length}</p>
+            <p className="text-sm text-blue-600">Hôm nay</p>
+          </div>
+
+          <div className="bg-white rounded-3xl p-6 shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-gray-900">Số món ăn</h3>
+              <div className="w-10 h-10 bg-orange-500 rounded-2xl flex items-center justify-center">
+                <UtensilsCrossed size={20} className="text-white" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-gray-900 mb-2">{menuItems.length}</p>
+            <p className="text-sm text-orange-600">Trong hệ thống</p>
+          </div>
+
+          <div className="bg-white rounded-3xl p-6 shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-gray-900">Nhân viên</h3>
+              <div className="w-10 h-10 bg-purple-500 rounded-2xl flex items-center justify-center">
+                <Users size={20} className="text-white" />
+              </div>
+            </div>
+            <p className="text-3xl font-bold text-gray-900 mb-2">{staffList.length}</p>
+            <p className="text-sm text-purple-600">Đang hoạt động</p>
+          </div>
+        </div>
+
+        {/* Charts and Analytics */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Best Selling Items */}
+          <div className="bg-white rounded-3xl p-6 shadow-xl">
+            <h3 className="text-xl font-bold text-gray-900 mb-6">Món bán chạy nhất</h3>
+            {bestSelling.length > 0 ? (
+              <div className="space-y-4">
+                {bestSelling.map((item, index) => (
+                  <div key={item.name} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                        {index + 1}
+                      </div>
+                      <span className="font-medium text-gray-900">{item.name}</span>
+                    </div>
+                    <span className="font-bold text-purple-600">{item.count} phần</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 text-center py-8">Không có dữ liệu cho ngày này</p>
+            )}
+          </div>
+
+          {/* Revenue Analytics */}
+          <div className="bg-white rounded-3xl p-6 shadow-xl">
+            <h3 className="text-xl font-bold text-gray-900 mb-6">Phân tích doanh thu</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between p-4 bg-green-50 rounded-xl">
+                <div className="flex items-center gap-3">
+                  <Banknote size={20} className="text-green-600" />
+                  <span className="font-medium">Tiền mặt</span>
+                </div>
+                <span className="font-bold text-green-600">{revenueData.cash.toLocaleString('vi-VN')}đ</span>
+              </div>
+              <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl">
+                <div className="flex items-center gap-3">
+                  <CreditCard size={20} className="text-blue-600" />
+                  <span className="font-medium">Chuyển khoản</span>
+                </div>
+                <span className="font-bold text-blue-600">{revenueData.transfer.toLocaleString('vi-VN')}đ</span>
+              </div>
+              <div className="pt-4 border-t">
+                <div className="flex items-center justify-between">
+                  <span className="text-lg font-bold">Tổng cộng</span>
+                  <span className="text-2xl font-bold text-gray-900">{totalRevenue.toLocaleString('vi-VN')}đ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Admin Menu Management
+  const AdminMenus = () => (
+    <div className="p-8 h-full overflow-y-auto bg-gray-50">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-3">Quản lý Menu</h1>
+          <p className="text-gray-600 text-lg">Thêm, sửa, xóa các loại menu</p>
+        </div>
+        <button
+          onClick={() => setShowAddMenuDialog(true)}
+          className="bg-purple-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-purple-700 transition-colors"
+        >
+          <Plus size={20} />
+          Thêm Menu Mới
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {menuTypes.map((menu) => (
+          <div key={menu.id} className="bg-white rounded-3xl p-6 shadow-xl">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-bold text-gray-900">{menu.name}</h3>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    setSelectedMenuTypeEdit(menu);
+                    setNewMenuName(menu.name);
+                    setShowEditMenuDialog(true);
+                  }}
+                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                >
+                  <Edit3 size={16} />
+                </button>
+                <button
+                  onClick={() => deleteMenuType(menu.id)}
+                  className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            </div>
+            <div className="space-y-2">
+              <p className="text-sm text-gray-600">
+                Số món: {menuItems.filter(item => item.menuType === menu.id).length}
+              </p>
+              <p className="text-sm text-gray-600">
+                ID: {menu.id}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Add Menu Dialog */}
+      {showAddMenuDialog && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 m-4 w-full max-w-md">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Thêm Menu Mới</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">ID Menu</label>
+                <input
+                  type="text"
+                  value={newMenuType}
+                  onChange={(e) => setNewMenuType(e.target.value)}
+                  placeholder="vd: summer, winter..."
+                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Tên Menu</label>
+                <input
+                  type="text"
+                  value={newMenuName}
+                  onChange={(e) => setNewMenuName(e.target.value)}
+                  placeholder="vd: Thực đơn mùa hè"
+                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+            </div>
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={addMenuType}
+                className="flex-1 bg-purple-600 text-white py-2 rounded-xl font-bold"
+              >
+                Thêm
+              </button>
+              <button
+                onClick={() => {
+                  setShowAddMenuDialog(false);
+                  setNewMenuType('');
+                  setNewMenuName('');
+                }}
+                className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-xl font-bold"
+              >
+                Hủy
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Menu Dialog */}
+      {showEditMenuDialog && selectedMenuTypeEdit && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 m-4 w-full max-w-md">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">Sửa Menu</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Tên Menu</label>
+                <input
+                  type="text"
+                  value={newMenuName}
+                  onChange={(e) => setNewMenuName(e.target.value)}
+                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+            </div>
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => {
+                  setMenuTypes(menuTypes.map(menu => 
+                    menu.id === selectedMenuTypeEdit.id 
+                      ? { ...menu, name: newMenuName }
+                      : menu
+                  ));
+                  setShowEditMenuDialog(false);
+                  setSelectedMenuTypeEdit(null);
+                  setNewMenuName('');
+                }}
+                className="flex-1 bg-purple-600 text-white py-2 rounded-xl font-bold"
+              >
+                Cập nhật
+              </button>
+              <button
+                onClick={() => {
+                  setShowEditMenuDialog(false);
+                  setSelectedMenuTypeEdit(null);
+                  setNewMenuName('');
+                }}
+                className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-xl font-bold"
+              >
+                Hủy
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  // Admin Items Management
+  const AdminItems = () => {
+    const [itemFilter, setItemFilter] = useState('all');
+    
+    const filteredItems = menuItems.filter(item => {
+      if (itemFilter === 'all') return true;
+      return item.menuType === itemFilter;
+    });
+
+    return (
+      <div className="p-8 h-full overflow-y-auto bg-gray-50">
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-3">Quản lý Món ăn</h1>
+            <p className="text-gray-600 text-lg">Thêm, sửa, xóa các món ăn</p>
+          </div>
+          <button
+            onClick={() => setShowAddItemDialog(true)}
+            className="bg-purple-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-purple-700 transition-colors"
+          >
+            <Plus size={20} />
+            Thêm Món Mới
+          </button>
+        </div>
+
+        {/* Filter */}
+        <div className="flex gap-3 mb-6">
+          <button
+            onClick={() => setItemFilter('all')}
+            className={`px-4 py-2 rounded-xl font-medium transition-colors ${
+              itemFilter === 'all' ? 'bg-purple-600 text-white' : 'bg-white text-gray-700'
+            }`}
+          >
+            Tất cả ({menuItems.length})
+          </button>
+          {menuTypes.map((menu) => (
+            <button
+              key={menu.id}
+              onClick={() => setItemFilter(menu.id)}
+              className={`px-4 py-2 rounded-xl font-medium transition-colors ${
+                itemFilter === menu.id ? 'bg-purple-600 text-white' : 'bg-white text-gray-700'
+              }`}
+            >
+              {menu.name} ({menuItems.filter(item => item.menuType === menu.id).length})
+            </button>
+          ))}
+        </div>
+
+        {/* Items Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filteredItems.map((item) => (
+            <div key={item.id} className="bg-white rounded-3xl p-4 shadow-xl">
+              <div className="relative mb-4">
+                <img 
+                  src={item.image} 
+                  alt={item.name}
+                  className="w-full h-32 object-cover rounded-2xl"
+                />
+                {item.isPopular && (
+                  <div className="absolute top-2 right-2 bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                    <Star size={12} className="inline" />
+                  </div>
+                )}
+              </div>
+              
+              <h3 className="font-bold text-gray-900 mb-1">{item.name}</h3>
+              <p className="text-sm text-gray-600 mb-2">{item.category}</p>
+              <p className="text-lg font-bold text-purple-600 mb-3">{item.price.toLocaleString('vi-VN')}đ</p>
+              
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    setSelectedMenuItem(item);
+                    setShowEditItemDialog(true);
+                  }}
+                  className="flex-1 bg-blue-100 text-blue-600 py-2 rounded-lg font-medium hover:bg-blue-200 transition-colors"
+                >
+                  Sửa
+                </button>
+                <button
+                  onClick={() => deleteMenuItem(item.id)}
+                  className="flex-1 bg-red-100 text-red-600 py-2 rounded-lg font-medium hover:bg-red-200 transition-colors"
+                >
+                  Xóa
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Add Item Dialog */}
+        {showAddItemDialog && <ItemDialog mode="add" onSave={addMenuItem} onClose={() => setShowAddItemDialog(false)} />}
+        
+        {/* Edit Item Dialog */}
+        {showEditItemDialog && selectedMenuItem && (
+          <ItemDialog 
+            mode="edit" 
+            item={selectedMenuItem}
+            onSave={(data) => updateMenuItem(selectedMenuItem.id, data)}
+            onClose={() => {
+              setShowEditItemDialog(false);
+              setSelectedMenuItem(null);
+            }}
+          />
+        )}
+      </div>
+    );
+  };
+
+  // Item Dialog Component
+  const ItemDialog = ({ mode, item, onSave, onClose }) => {
+    const [formData, setFormData] = useState({
+      name: item?.name || '',
+      category: item?.category || 'Phở',
+      price: item?.price || 0,
+      image: item?.image || '',
+      isPopular: item?.isPopular || false,
+      menuType: item?.menuType || 'regular'
+    });
+
+    const handleSave = () => {
+      if (formData.name && formData.category && formData.price) {
+        onSave(formData);
+        onClose();
+      }
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <h3 className="text-lg font-bold text-gray-900 mb-4">
+            {mode === 'add' ? 'Thêm Món Mới' : 'Sửa Món Ăn'}
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Tên món</label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Danh mục</label>
+                <select
+                  value={formData.category}
+                  onChange={(e) => setFormData({...formData, category: e.target.value})}
+                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                >
+                  <option value="Phở">Phở</option>
+                  <option value="Bún">Bún</option>
+                  <option value="Cơm">Cơm</option>
+                  <option value="Bánh">Bánh</option>
+                  <option value="Khai vị">Khai vị</option>
+                  <option value="Đồ uống">Đồ uống</option>
+                  <option value="Món Tết">Món Tết</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Giá (VND)</label>
+                <input
+                  type="number"
+                  value={formData.price}
+                  onChange={(e) => setFormData({...formData, price: Number(e.target.value)})}
+                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">URL Hình ảnh</label>
+                <input
+                  type="url"
+                  value={formData.image}
+                  onChange={(e) => setFormData({...formData, image: e.target.value})}
+                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Loại menu</label>
+                <select
+                  value={formData.menuType}
+                  onChange={(e) => setFormData({...formData, menuType: e.target.value})}
+                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                >
+                  {menuTypes.map((menu) => (
+                    <option key={menu.id} value={menu.id}>{menu.name}</option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  id="isPopular"
+                  checked={formData.isPopular}
+                  onChange={(e) => setFormData({...formData, isPopular: e.target.checked})}
+                  className="w-5 h-5 text-purple-600"
+                />
+                <label htmlFor="isPopular" className="text-sm font-medium text-gray-700">
+                  Món phổ biến
+                </label>
+              </div>
+              
+              {formData.image && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Preview</label>
+                  <img 
+                    src={formData.image} 
+                    alt="Preview"
+                    className="w-full h-32 object-cover rounded-xl"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+          
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={handleSave}
+              className="flex-1 bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition-colors"
+            >
+              {mode === 'add' ? 'Thêm' : 'Cập nhật'}
+            </button>
+            <button
+              onClick={onClose}
+              className="flex-1 bg-gray-300 text-gray-700 py-3 rounded-xl font-bold hover:bg-gray-400 transition-colors"
+            >
+              Hủy
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Admin Staff Management
+  const AdminStaff = () => (
+    <div className="p-8 h-full overflow-y-auto bg-gray-50">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-3">Quản lý Nhân viên</h1>
+          <p className="text-gray-600 text-lg">Quản lý thông tin nhân viên</p>
+        </div>
+        <button className="bg-purple-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-purple-700 transition-colors">
+          <Plus size={20} />
+          Thêm Nhân viên
+        </button>
+      </div>
+
+      <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Tên</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Chức vụ</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Trạng thái</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Ngày vào làm</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-500">Hành động</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {staffList.map((staff) => (
+                <tr key={staff.id}>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                        {staff.name.charAt(0)}
+                      </div>
+                      <span className="font-medium text-gray-900">{staff.name}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-gray-900">{staff.role}</td>
+                  <td className="px-6 py-4">
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      staff.status === 'active' 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-red-100 text-red-800'
+                    }`}>
+                      {staff.status === 'active' ? 'Hoạt động' : 'Nghỉ việc'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 text-gray-900">{staff.joinDate}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex gap-2">
+                      <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
+                        <Edit3 size={16} />
+                      </button>
+                      <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg">
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Admin Page Layout
+  const AdminPage = () => (
+    <div className="h-screen bg-gray-50 flex overflow-hidden">
+      <AdminSidebar />
+      <div className="flex-1 overflow-hidden">
+        {adminSection === 'dashboard' && <AdminDashboard />}
+        {adminSection === 'menus' && <AdminMenus />}
+        {adminSection === 'items' && <AdminItems />}
+        {adminSection === 'staff' && <AdminStaff />}
       </div>
     </div>
   );
@@ -841,7 +1522,7 @@ function App() {
           onChange={(e) => setSelectedMenuType(e.target.value)}
           className="px-4 py-3 bg-primary-main rounded-2xl text-primary-button focus:ring-2 focus:ring-primary-highlight min-w-48 shadow-md"
         >
-          {MENU_TYPES.map((menuType) => (
+          {menuTypes.map((menuType) => (
             <option key={menuType.id} value={menuType.id}>
               {menuType.name}
             </option>
@@ -1628,6 +2309,11 @@ function App() {
   // Show login page if not logged in
   if (showLoginPage && !isLoggedIn) {
     return <LoginPage />;
+  }
+
+  // Show admin page if admin is logged in
+  if (isAdmin) {
+    return <AdminPage />;
   }
 
   return (
