@@ -380,7 +380,7 @@ function App() {
       clearTable();
     }
     
-    setShowPaymentPage(false);
+    setShowPaymentDialog(false);
     // Show success notification in real app
   };
 
