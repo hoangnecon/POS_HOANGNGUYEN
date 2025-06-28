@@ -948,7 +948,7 @@ function App() {
     const totalAmount = getTotalAmount();
 
     return (
-      <div className="w-[480px] bg-primary-main border-l border-primary-stroke flex flex-col h-screen shadow-2xl">
+      <div className="w-[480px] bg-primary-main flex flex-col h-screen shadow-2xl">
         {/* Header - Fixed */}
         <div className="p-6 border-b border-primary-stroke bg-primary-main">
           <div className="flex items-center justify-between mb-3">
