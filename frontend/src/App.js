@@ -380,20 +380,6 @@ function App() {
     // Show success notification in real app
   };
 
-  const printBill = () => {
-    setPrintType('bill');
-    setShowPrintPreview(true);
-  };
-
-  const printOrder = () => {
-    setPrintType('order');
-    setShowPrintPreview(true);
-  };
-
-  const handlePrint = () => {
-    window.print();
-    setShowPrintPreview(false);
-  };
 
   const handleNoteSubmit = () => {
     if (currentNoteType === 'table') {
