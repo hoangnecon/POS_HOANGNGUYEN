@@ -1349,6 +1349,13 @@ function App() {
     const finalAmount = getFinalAmount();
 
     return (
+  const PaymentDialog = () => {
+    const currentOrders = getCurrentOrders();
+    const subtotal = getTotalAmount();
+    const discountAmount = getDiscountAmount();
+    const finalAmount = getFinalAmount();
+
+    return (
       <div className="fixed inset-0 bg-primary-bg z-50 overflow-y-auto">
         <div className="min-h-full flex">
           {/* Left side - Order details */}
