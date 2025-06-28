@@ -542,7 +542,7 @@ function App() {
               <button
                 key={item.id}
                 onClick={() => addToOrder(item)}
-                className="flex-shrink-0 px-4 py-2 bg-primary-main border border-primary-stroke rounded-xl hover:border-primary-highlight transition-all duration-300 hover:bg-primary-secondary"
+                className="flex-shrink-0 px-4 py-2 bg-primary-main rounded-xl hover:bg-primary-secondary transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 <span className="text-sm font-medium text-primary-headline whitespace-nowrap">{item.name}</span>
               </button>
