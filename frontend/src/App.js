@@ -1249,40 +1249,425 @@ function App() {
           </div>
         )}
 
-        {/* Note Dialog */}
-        {(showNoteDialog || showItemNoteDialog) && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            <div className="bg-primary-main rounded-2xl p-6 m-4 w-full max-w-md shadow-2xl">
-              <h3 className="text-lg font-bold text-primary-headline mb-4">
-                {currentNoteType === 'table' ? 'Ghi chú đơn hàng' : 'Ghi chú món ăn'}
-              </h3>
-              <textarea
-                value={noteInput}
-                onChange={(e) => setNoteInput(e.target.value)}
-                placeholder="Nhập ghi chú..."
-                className="w-full h-24 p-3 border border-primary-stroke rounded-xl bg-primary-secondary text-primary-headline resize-none focus:ring-2 focus:ring-primary-highlight"
-              />
-              <div className="flex gap-3 mt-4">
+  const PaymentPage = () => {
+    const currentOrders = getCurrentOrders();
+    const subtotal = getTotalAmount();
+    const discountAmount = getDiscountAmount();
+    const finalAmount = getFinalAmount();
+
+    return (
+      <div className="fixed inset-0 bg-primary-bg z-50 overflow-y-auto">
+        <div className="min-h-full flex">
+          {/* Left side - Order details */}
+          <div className="flex-1 p-8">
+            <div className="bg-primary-main rounded-3xl p-8 shadow-xl max-w-2xl mx-auto">
+              {/* Header */}
+              <div className="flex items-center gap-4 mb-8">
                 <button
-                  onClick={handleNoteSubmit}
-                  className="flex-1 bg-primary-button text-primary-main py-2 rounded-xl font-bold"
+                  onClick={() => setShowPaymentPage(false)}
+                  className="w-12 h-12 bg-primary-secondary rounded-xl flex items-center justify-center hover:bg-primary-highlight transition-colors"
                 >
-                  Lưu
+                  <ArrowLeft size={20} className="text-primary-button" />
                 </button>
-                <button
-                  onClick={() => {
-                    setShowNoteDialog(false);
-                    setShowItemNoteDialog(false);
-                    setNoteInput('');
-                  }}
-                  className="flex-1 bg-primary-secondary text-primary-button py-2 rounded-xl font-bold border border-primary-stroke"
-                >
-                  Hủy
-                </button>
+                <div>
+                  <h1 className="text-3xl font-bold text-primary-headline">Thanh toán</h1>
+                  <p className="text-primary-paragraph">
+                    {selectedTable === 'takeaway' ? 'Đơn mang về' : `Bàn ${selectedTable}`}
+                  </p>
+                </div>
+              </div>
+
+              {/* Order Items */}
+              <div className="mb-8">
+                <h3 className="text-xl font-bold text-primary-headline mb-4">Chi tiết đơn hàng</h3>
+                <div className="space-y-3">
+                  {currentOrders.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between p-4 bg-primary-secondary rounded-xl shadow-md">
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 bg-primary-bg rounded-xl overflow-hidden">
+                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-primary-headline">{item.name}</h4>
+                          <p className="text-sm text-primary-paragraph">Số lượng: {item.quantity}</p>
+                          <p className="text-sm text-primary-button font-medium">{item.price.toLocaleString('vi-VN')}đ x {item.quantity}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xl font-bold text-primary-button">
+                          {(item.price * item.quantity).toLocaleString('vi-VN')}đ
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Discount Section */}
+              <div className="mb-8">
+                <h3 className="text-xl font-bold text-primary-headline mb-4">Giảm giá</h3>
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  <button
+                    onClick={() => setDiscountType('none')}
+                    className={`p-3 rounded-xl font-medium transition-all shadow-md ${
+                      discountType === 'none' 
+                        ? 'bg-primary-button text-primary-main' 
+                        : 'bg-primary-secondary text-primary-button'
+                    }`}
+                  >
+                    Không giảm
+                  </button>
+                  <button
+                    onClick={() => setDiscountType('percent')}
+                    className={`p-3 rounded-xl font-medium transition-all shadow-md ${
+                      discountType === 'percent' 
+                        ? 'bg-primary-button text-primary-main' 
+                        : 'bg-primary-secondary text-primary-button'
+                    }`}
+                  >
+                    <Percent size={16} className="inline mr-1" />
+                    Theo %
+                  </button>
+                  <button
+                    onClick={() => setDiscountType('amount')}
+                    className={`p-3 rounded-xl font-medium transition-all shadow-md ${
+                      discountType === 'amount' 
+                        ? 'bg-primary-button text-primary-main' 
+                        : 'bg-primary-secondary text-primary-button'
+                    }`}
+                  >
+                    <DollarSign size={16} className="inline mr-1" />
+                    Số tiền
+                  </button>
+                </div>
+                
+                {discountType !== 'none' && (
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="number"
+                      value={discountValue}
+                      onChange={(e) => setDiscountValue(Number(e.target.value))}
+                      placeholder={discountType === 'percent' ? 'Nhập % giảm' : 'Nhập số tiền giảm'}
+                      className="flex-1 p-3 bg-primary-secondary rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
+                    />
+                    <span className="text-primary-paragraph">
+                      {discountType === 'percent' ? '%' : 'VND'}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Price Summary */}
+              <div className="bg-primary-secondary rounded-xl p-6 shadow-lg">
+                <div className="space-y-3">
+                  <div className="flex justify-between text-lg">
+                    <span className="text-primary-paragraph">Tạm tính:</span>
+                    <span className="font-bold text-primary-headline">{subtotal.toLocaleString('vi-VN')}đ</span>
+                  </div>
+                  
+                  {discountAmount > 0 && (
+                    <div className="flex justify-between text-lg text-red-600">
+                      <span>Giảm giá:</span>
+                      <span className="font-bold">-{discountAmount.toLocaleString('vi-VN')}đ</span>
+                    </div>
+                  )}
+                  
+                  <div className="border-t border-primary-stroke pt-3">
+                    <div className="flex justify-between text-2xl">
+                      <span className="font-bold text-primary-headline">Tổng cộng:</span>
+                      <span className="font-bold text-primary-button">{finalAmount.toLocaleString('vi-VN')}đ</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        )}
+
+          {/* Right side - Payment options */}
+          <div className="w-96 bg-primary-main p-8 shadow-2xl">
+            <h2 className="text-2xl font-bold text-primary-headline mb-6">Phương thức thanh toán</h2>
+            
+            {/* Payment Method */}
+            <div className="mb-6">
+              <h3 className="text-lg font-bold text-primary-headline mb-3">Hình thức</h3>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => setPaymentMethod('cash')}
+                  className={`p-4 rounded-xl font-medium transition-all shadow-md ${
+                    paymentMethod === 'cash' 
+                      ? 'bg-primary-button text-primary-main' 
+                      : 'bg-primary-secondary text-primary-button'
+                  }`}
+                >
+                  <Banknote size={20} className="mx-auto mb-2" />
+                  Tiền mặt
+                </button>
+                <button
+                  onClick={() => setPaymentMethod('transfer')}
+                  className={`p-4 rounded-xl font-medium transition-all shadow-md ${
+                    paymentMethod === 'transfer' 
+                      ? 'bg-primary-button text-primary-main' 
+                      : 'bg-primary-secondary text-primary-button'
+                  }`}
+                >
+                  <CreditCard size={20} className="mx-auto mb-2" />
+                  Chuyển khoản
+                </button>
+              </div>
+            </div>
+
+            {/* Partial Payment */}
+            <div className="mb-6">
+              <label className="flex items-center gap-3 mb-3">
+                <input
+                  type="checkbox"
+                  checked={partialPayment}
+                  onChange={(e) => setPartialPayment(e.target.checked)}
+                  className="w-5 h-5 text-primary-button"
+                />
+                <span className="text-lg font-bold text-primary-headline">Thanh toán một phần</span>
+              </label>
+              
+              {partialPayment && (
+                <div className="space-y-3">
+                  <input
+                    type="number"
+                    value={paidAmount}
+                    onChange={(e) => setPaidAmount(Number(e.target.value))}
+                    placeholder="Số tiền thanh toán"
+                    className="w-full p-3 bg-primary-secondary rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
+                  />
+                  <div className="text-sm text-primary-paragraph">
+                    <p>Còn lại: <span className="font-bold text-primary-tertiary">{getRemainingAmount().toLocaleString('vi-VN')}đ</span></p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Quick Amount Buttons */}
+            <div className="mb-8">
+              <h3 className="text-lg font-bold text-primary-headline mb-3">Số tiền nhanh</h3>
+              <div className="grid grid-cols-3 gap-2">
+                {[50000, 100000, 200000, 500000, 1000000, 2000000].map((amount) => (
+                  <button
+                    key={amount}
+                    onClick={() => partialPayment ? setPaidAmount(amount) : null}
+                    className="p-2 bg-primary-secondary hover:bg-primary-button hover:text-primary-main rounded-lg text-sm font-medium transition-all shadow-md"
+                  >
+                    {(amount / 1000).toLocaleString('vi-VN')}k
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Payment Actions */}
+            <div className="space-y-4">
+              <button
+                onClick={processPayment}
+                disabled={partialPayment && (paidAmount <= 0 || paidAmount > finalAmount)}
+                className="w-full bg-primary-button hover:bg-primary-highlight text-primary-main py-4 rounded-xl font-bold text-lg transition-all shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Check size={20} className="inline mr-2" />
+                {partialPayment ? 'Thanh toán một phần' : 'Hoàn tất thanh toán'}
+              </button>
+              
+              <button
+                onClick={() => setShowPaymentPage(false)}
+                className="w-full bg-primary-secondary hover:bg-primary-paragraph text-primary-button py-3 rounded-xl font-bold transition-all shadow-md"
+              >
+                Hủy bỏ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const PrintPreview = () => {
+    const currentOrders = getCurrentOrders();
+    const subtotal = getTotalAmount();
+    const discountAmount = getDiscountAmount();
+    const finalAmount = getFinalAmount();
+    const currentDate = new Date();
+
+    if (printType === 'bill') {
+      return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-8 m-4 w-full max-w-md shadow-2xl print-section">
+            <div className="text-center mb-6">
+              <h1 className="text-2xl font-bold">CASHAA RESTAURANT</h1>
+              <p className="text-sm text-gray-600">123 Đường ABC, Quận 1, TP.HCM</p>
+              <p className="text-sm text-gray-600">Tel: 0123.456.789</p>
+              <div className="border-t border-gray-300 mt-4 pt-4">
+                <h2 className="text-lg font-bold">HÓA ĐƠN THANH TOÁN</h2>
+              </div>
+            </div>
+
+            <div className="mb-6 text-sm">
+              <div className="flex justify-between mb-1">
+                <span>Ngày:</span>
+                <span>{currentDate.toLocaleDateString('vi-VN')}</span>
+              </div>
+              <div className="flex justify-between mb-1">
+                <span>Giờ:</span>
+                <span>{currentDate.toLocaleTimeString('vi-VN')}</span>
+              </div>
+              <div className="flex justify-between mb-1">
+                <span>Bàn:</span>
+                <span>{selectedTable === 'takeaway' ? 'Mang về' : `Bàn ${selectedTable}`}</span>
+              </div>
+              <div className="flex justify-between mb-1">
+                <span>Thu ngân:</span>
+                <span>Thu ngân A</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Hóa đơn số:</span>
+                <span>#{Math.random().toString(36).substr(2, 9).toUpperCase()}</span>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-300 pt-4 mb-6">
+              <div className="space-y-2 text-sm">
+                {currentOrders.map((item, index) => (
+                  <div key={index}>
+                    <div className="flex justify-between">
+                      <span className="font-medium">{item.name}</span>
+                      <span>{(item.price * item.quantity).toLocaleString('vi-VN')}đ</span>
+                    </div>
+                    <div className="text-gray-600 text-xs ml-2">
+                      {item.price.toLocaleString('vi-VN')}đ x {item.quantity}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-gray-300 pt-4 text-sm">
+              <div className="flex justify-between mb-2">
+                <span>Tạm tính:</span>
+                <span>{subtotal.toLocaleString('vi-VN')}đ</span>
+              </div>
+              
+              {discountAmount > 0 && (
+                <div className="flex justify-between mb-2 text-red-600">
+                  <span>Giảm giá:</span>
+                  <span>-{discountAmount.toLocaleString('vi-VN')}đ</span>
+                </div>
+              )}
+              
+              <div className="border-t border-gray-300 pt-2 mt-2">
+                <div className="flex justify-between text-lg font-bold">
+                  <span>Tổng cộng:</span>
+                  <span>{finalAmount.toLocaleString('vi-VN')}đ</span>
+                </div>
+                <div className="flex justify-between text-sm mt-1">
+                  <span>Thanh toán:</span>
+                  <span>{paymentMethod === 'cash' ? 'Tiền mặt' : 'Chuyển khoản'}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center mt-6 pt-4 border-t border-gray-300 text-xs text-gray-600">
+              <p>Cảm ơn quý khách đã sử dụng dịch vụ!</p>
+              <p>Hẹn gặp lại quý khách!</p>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={handlePrint}
+                className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-bold"
+              >
+                <Printer size={16} className="inline mr-2" />
+                In hóa đơn
+              </button>
+              <button
+                onClick={() => setShowPrintPreview(false)}
+                className="flex-1 bg-gray-500 text-white py-2 rounded-lg font-bold"
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Kitchen Order Print
+    return (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="bg-white rounded-2xl p-8 m-4 w-full max-w-md shadow-2xl print-section">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold">CASHAA - BẾP</h1>
+            <h2 className="text-lg font-bold text-red-600">PHIẾU CHẾ BIẾN</h2>
+          </div>
+
+          <div className="mb-6 text-sm">
+            <div className="flex justify-between mb-1">
+              <span className="font-bold">Ngày giờ:</span>
+              <span>{currentDate.toLocaleString('vi-VN')}</span>
+            </div>
+            <div className="flex justify-between mb-1">
+              <span className="font-bold">Bàn:</span>
+              <span className="text-lg font-bold text-red-600">
+                {selectedTable === 'takeaway' ? 'MANG VỀ' : `BÀN ${selectedTable}`}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-bold">Phiếu số:</span>
+              <span>#{Math.random().toString(36).substr(2, 6).toUpperCase()}</span>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-300 pt-4 mb-6">
+            <h3 className="font-bold mb-3 text-center">DANH SÁCH MÓN</h3>
+            <div className="space-y-3">
+              {currentOrders.map((item, index) => (
+                <div key={index} className="border border-gray-300 p-3 rounded">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-bold text-lg">{item.name}</span>
+                    <span className="text-2xl font-bold text-red-600">x{item.quantity}</span>
+                  </div>
+                  {itemNotes[`${selectedTable}-${item.id}`] && (
+                    <div className="text-sm text-red-600 bg-yellow-100 p-2 rounded">
+                      <strong>Ghi chú:</strong> {itemNotes[`${selectedTable}-${item.id}`]}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {tableNotes[selectedTable] && (
+            <div className="bg-yellow-100 p-3 rounded mb-6">
+              <div className="font-bold text-red-600">GHI CHÚ CHUNG:</div>
+              <div className="text-sm">{tableNotes[selectedTable]}</div>
+            </div>
+          )}
+
+          <div className="text-center text-sm text-gray-600 mb-6">
+            <p>Tổng số món: <span className="font-bold">{currentOrders.reduce((sum, item) => sum + item.quantity, 0)}</span></p>
+          </div>
+
+          <div className="flex gap-3">
+            <button
+              onClick={handlePrint}
+              className="flex-1 bg-red-600 text-white py-2 rounded-lg font-bold"
+            >
+              <Printer size={16} className="inline mr-2" />
+              In phiếu bếp
+            </button>
+            <button
+              onClick={() => setShowPrintPreview(false)}
+              className="flex-1 bg-gray-500 text-white py-2 rounded-lg font-bold"
+            >
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
       </div>
     );
   };
