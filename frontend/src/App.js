@@ -924,7 +924,7 @@ function App() {
                 <h4 className="font-bold text-primary-headline mb-3">Chi tiết món ăn</h4>
                 <div className="space-y-3">
                   {selectedOrder.items.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-primary-secondary rounded-xl">
+                    <div key={index} className="flex items-center justify-between p-3 bg-primary-secondary rounded-xl shadow-md">
                       <div>
                         <span className="font-medium text-primary-headline">{item.name}</span>
                         <span className="text-sm text-primary-paragraph ml-2">x{item.quantity}</span>
