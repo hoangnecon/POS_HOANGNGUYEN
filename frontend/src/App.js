@@ -609,7 +609,7 @@ function App() {
         <select
           value={selectedMenuType}
           onChange={(e) => setSelectedMenuType(e.target.value)}
-          className="px-4 py-3 bg-primary-main border border-primary-stroke rounded-2xl text-primary-button focus:ring-2 focus:ring-primary-highlight min-w-48"
+          className="px-4 py-3 bg-primary-main rounded-2xl text-primary-button focus:ring-2 focus:ring-primary-highlight min-w-48 shadow-md"
         >
           {MENU_TYPES.map((menuType) => (
             <option key={menuType.id} value={menuType.id}>
