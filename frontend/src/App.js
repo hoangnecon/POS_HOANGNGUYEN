@@ -1783,8 +1783,8 @@ function App() {
         <OrderPanel />
       </div>
 
-      {/* Payment Page Modal */}
-      {showPaymentDialog && <PaymentPage />}
+      {/* Payment Dialog Modal */}
+      {showPaymentDialog && <PaymentDialog />}
 
       {/* Note Dialog */}
       {(showNoteDialog || showItemNoteDialog) && (
