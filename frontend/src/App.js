@@ -1281,29 +1281,29 @@ function App() {
 
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">
+        <div className="bg-primary-main rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
+          <h3 className="text-lg font-bold text-primary-headline mb-4">
             {mode === 'add' ? 'Thêm Món Mới' : 'Sửa Món Ăn'}
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Tên món</label>
+                <label className="block text-sm font-medium text-primary-paragraph mb-2">Tên món</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                  className="w-full p-3 bg-primary-secondary rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Danh mục</label>
+                <label className="block text-sm font-medium text-primary-paragraph mb-2">Danh mục</label>
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({...formData, category: e.target.value})}
-                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                  className="w-full p-3 bg-primary-secondary rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
                 >
                   <option value="Phở">Phở</option>
                   <option value="Bún">Bún</option>
@@ -1316,33 +1316,33 @@ function App() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Giá (VND)</label>
+                <label className="block text-sm font-medium text-primary-paragraph mb-2">Giá (VND)</label>
                 <input
                   type="number"
                   value={formData.price}
                   onChange={(e) => setFormData({...formData, price: Number(e.target.value)})}
-                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                  className="w-full p-3 bg-primary-secondary rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
                 />
               </div>
             </div>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">URL Hình ảnh</label>
+                <label className="block text-sm font-medium text-primary-paragraph mb-2">URL Hình ảnh</label>
                 <input
                   type="url"
                   value={formData.image}
                   onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                  className="w-full p-3 bg-primary-secondary rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Loại menu</label>
+                <label className="block text-sm font-medium text-primary-paragraph mb-2">Loại menu</label>
                 <select
                   value={formData.menuType}
                   onChange={(e) => setFormData({...formData, menuType: e.target.value})}
-                  className="w-full p-3 border rounded-xl focus:ring-2 focus:ring-purple-500"
+                  className="w-full p-3 bg-primary-secondary rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
                 >
                   {menuTypes.map((menu) => (
                     <option key={menu.id} value={menu.id}>{menu.name}</option>
@@ -1356,16 +1356,16 @@ function App() {
                   id="isPopular"
                   checked={formData.isPopular}
                   onChange={(e) => setFormData({...formData, isPopular: e.target.checked})}
-                  className="w-5 h-5 text-purple-600"
+                  className="w-5 h-5 text-primary-button"
                 />
-                <label htmlFor="isPopular" className="text-sm font-medium text-gray-700">
+                <label htmlFor="isPopular" className="text-sm font-medium text-primary-paragraph">
                   Món phổ biến
                 </label>
               </div>
               
               {formData.image && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Preview</label>
+                  <label className="block text-sm font-medium text-primary-paragraph mb-2">Preview</label>
                   <img 
                     src={formData.image} 
                     alt="Preview"
@@ -1379,13 +1379,13 @@ function App() {
           <div className="flex gap-3 mt-6">
             <button
               onClick={handleSave}
-              className="flex-1 bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition-colors"
+              className="flex-1 bg-primary-button text-primary-main py-3 rounded-xl font-bold hover:bg-primary-highlight transition-colors shadow-md"
             >
               {mode === 'add' ? 'Thêm' : 'Cập nhật'}
             </button>
             <button
               onClick={onClose}
-              className="flex-1 bg-gray-300 text-gray-700 py-3 rounded-xl font-bold hover:bg-gray-400 transition-colors"
+              className="flex-1 bg-primary-secondary text-primary-button py-3 rounded-xl font-bold hover:bg-primary-stroke transition-colors shadow-md"
             >
               Hủy
             </button>
