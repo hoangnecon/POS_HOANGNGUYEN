@@ -1067,8 +1067,8 @@ function App() {
 
         {/* Payment Section - Fixed */}
         {currentOrders.length > 0 && (
-          <div className="border-t border-primary-stroke bg-primary-secondary p-6">
-            <div className="bg-primary-main rounded-2xl p-4 mb-4 border border-primary-stroke shadow-lg">
+          <div className="bg-primary-secondary p-6 shadow-inner">
+            <div className="bg-primary-main rounded-2xl p-4 mb-4 shadow-lg">
               <h3 className="text-lg font-bold text-center text-primary-headline mb-4">
                 PHIẾU THANH TOÁN
               </h3>
