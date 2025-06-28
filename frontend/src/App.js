@@ -16,33 +16,137 @@ import {
   Printer,
   FileText,
   Clock,
-  Users
+  Users,
+  Star,
+  Heart,
+  ChefHat,
+  Coffee
 } from 'lucide-react';
 import './App.css';
 
 const MENU_ITEMS = [
-  { id: 1, name: 'Tôm Chiên Dầu', category: 'Phở', price: 65000, image: '/api/placeholder/60/60' },
-  { id: 2, name: 'Cà Phê Đen', category: 'Đồ uống', price: 18000, image: '/api/placeholder/60/60' },
-  { id: 3, name: 'Cà Phê Sữa', category: 'Đồ uống', price: 20000, image: '/api/placeholder/60/60' },
-  { id: 4, name: 'Cà Phê Sữa Đá Dồn', category: 'Đồ uống', price: 25000, image: '/api/placeholder/60/60' },
-  { id: 5, name: 'Trà Sữa Thái Đỏ', category: 'Đồ uống', price: 35000, image: '/api/placeholder/60/60' },
-  { id: 6, name: 'Phở Bò', category: 'Phở', price: 60000, image: '/api/placeholder/60/60' },
-  { id: 7, name: 'Bún Bò Huế', category: 'Bún', price: 70000, image: '/api/placeholder/60/60' },
-  { id: 8, name: 'Bún Chả', category: 'Bún', price: 75000, image: '/api/placeholder/60/60' },
-  { id: 9, name: 'Cơm Tấm', category: 'Cơm', price: 80000, image: '/api/placeholder/60/60' },
-  { id: 10, name: 'Bánh Mì', category: 'Bánh', price: 25000, image: '/api/placeholder/60/60' },
+  { 
+    id: 1, 
+    name: 'Phở Bò Đặc Biệt', 
+    category: 'Phở', 
+    price: 89000, 
+    image: 'https://images.unsplash.com/photo-1533787761082-492a5b83e614?w=300&h=200&fit=crop',
+    description: 'Phở bò truyền thống với thịt bò tươi',
+    rating: 4.8,
+    isPopular: true
+  },
+  { 
+    id: 2, 
+    name: 'Phở Gà Hà Nội', 
+    category: 'Phở', 
+    price: 75000, 
+    image: 'https://images.unsplash.com/photo-1590420882553-4f9150b71f92?w=300&h=200&fit=crop',
+    description: 'Phở gà thanh đạm hương vị Hà thành',
+    rating: 4.6,
+    isPopular: false
+  },
+  { 
+    id: 3, 
+    name: 'Bún Bò Huế', 
+    category: 'Bún', 
+    price: 79000, 
+    image: 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?w=300&h=200&fit=crop',
+    description: 'Bún bò cay nồng đậm đà miền Trung',
+    rating: 4.7,
+    isPopular: true
+  },
+  { 
+    id: 4, 
+    name: 'Bún Chả Hà Nội', 
+    category: 'Bún', 
+    price: 85000, 
+    image: 'https://images.pexels.com/photos/2059153/pexels-photo-2059153.jpeg?w=300&h=200&fit=crop',
+    description: 'Chả nướng thơm lừng ăn kèm bún tươi',
+    rating: 4.9,
+    isPopular: true
+  },
+  { 
+    id: 5, 
+    name: 'Bánh Mì Thịt Nướng', 
+    category: 'Bánh', 
+    price: 35000, 
+    image: 'https://images.unsplash.com/photo-1600454309261-3dc9b7597637?w=300&h=200&fit=crop',
+    description: 'Bánh mì giòn với thịt nướng đậm đà',
+    rating: 4.5,
+    isPopular: false
+  },
+  { 
+    id: 6, 
+    name: 'Gỏi Cuốn Tôm Thịt', 
+    category: 'Khai vị', 
+    price: 45000, 
+    image: 'https://images.pexels.com/photos/6646082/pexels-photo-6646082.jpeg?w=300&h=200&fit=crop',
+    description: 'Gỏi cuốn tươi mát với tôm và thịt',
+    rating: 4.4,
+    isPopular: false
+  },
+  { 
+    id: 7, 
+    name: 'Cơm Tấm Sài Gòn', 
+    category: 'Cơm', 
+    price: 95000, 
+    image: 'https://images.pexels.com/photos/6646037/pexels-photo-6646037.jpeg?w=300&h=200&fit=crop',
+    description: 'Cơm tấm với sườn nướng đặc biệt',
+    rating: 4.8,
+    isPopular: true
+  },
+  { 
+    id: 8, 
+    name: 'Cà Phê Đen Đá', 
+    category: 'Đồ uống', 
+    price: 25000, 
+    image: 'https://images.unsplash.com/photo-1641440615059-42c8ed3af8c8?w=300&h=200&fit=crop',
+    description: 'Cà phê phin truyền thống đậm đà',
+    rating: 4.6,
+    isPopular: true
+  },
+  { 
+    id: 9, 
+    name: 'Trà Sữa Thái Xanh', 
+    category: 'Đồ uống', 
+    price: 39000, 
+    image: 'https://images.unsplash.com/photo-1533787761082-492a5b83e614?w=300&h=200&fit=crop',
+    description: 'Trà sữa thái xanh thơm mát',
+    rating: 4.3,
+    isPopular: false
+  },
+  { 
+    id: 10, 
+    name: 'Chè Ba Màu', 
+    category: 'Tráng miệng', 
+    price: 32000, 
+    image: 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?w=300&h=200&fit=crop',
+    description: 'Chè ba màu truyền thống mát lạnh',
+    rating: 4.2,
+    isPopular: false
+  }
 ];
 
-const CATEGORIES = ['Tất cả', 'Phở', 'Bún', 'Cơm', 'Bánh', 'Đồ uống'];
+const CATEGORIES = [
+  { id: 'all', name: 'Tất cả', icon: UtensilsCrossed },
+  { id: 'popular', name: 'Phổ biến', icon: Star },
+  { id: 'Phở', name: 'Phở', icon: Coffee },
+  { id: 'Bún', name: 'Bún', icon: ChefHat },
+  { id: 'Cơm', name: 'Cơm', icon: UtensilsCrossed },
+  { id: 'Bánh', name: 'Bánh', icon: Coffee },
+  { id: 'Khai vị', name: 'Khai vị', icon: Heart },
+  { id: 'Đồ uống', name: 'Đồ uống', icon: Coffee },
+  { id: 'Tráng miệng', name: 'Tráng miệng', icon: Heart }
+];
 
 function App() {
   const [activeSection, setActiveSection] = useState('tables');
   const [selectedTable, setSelectedTable] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Tất cả');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [showRecent, setShowRecent] = useState(false);
   const [orders, setOrders] = useState({});
-  const [recentItems, setRecentItems] = useState([1, 3, 5, 7]);
+  const [recentItems, setRecentItems] = useState([1, 3, 4, 7, 8]);
 
   // Initialize tables
   const [tables, setTables] = useState(() => {
@@ -50,8 +154,9 @@ function App() {
     for (let i = 1; i <= 32; i++) {
       initialTables[i] = {
         id: i,
-        status: [1, 3, 7, 12, 15].includes(i) ? 'occupied' : 'available',
-        customers: [1, 3, 7, 12, 15].includes(i) ? Math.floor(Math.random() * 6) + 1 : 0
+        status: [1, 3, 7, 12, 15, 18, 22].includes(i) ? 'occupied' : 'available',
+        customers: [1, 3, 7, 12, 15, 18, 22].includes(i) ? Math.floor(Math.random() * 6) + 1 : 0,
+        orderTime: [1, 3, 7, 12, 15, 18, 22].includes(i) ? new Date(Date.now() - Math.random() * 3600000).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) : null
       };
     }
     return initialTables;
@@ -105,8 +210,13 @@ function App() {
   };
 
   const filteredMenuItems = MENU_ITEMS.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'Tất cả' || item.category === selectedCategory;
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                         item.description.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    if (selectedCategory === 'all') return matchesSearch;
+    if (selectedCategory === 'popular') return matchesSearch && item.isPopular;
+    
+    const matchesCategory = item.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
@@ -115,156 +225,185 @@ function App() {
   };
 
   const Sidebar = () => (
-    <div className="w-16 bg-white shadow-sm border-r border-gray-100 flex flex-col items-center py-6">
+    <div className="w-20 bg-gradient-to-b from-purple-900 to-purple-800 flex flex-col items-center py-8 shadow-2xl">
       {/* Logo */}
-      <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-8 shadow-lg">
-        <span className="text-white font-bold text-lg">C</span>
+      <div className="w-14 h-14 bg-gradient-to-br from-white/20 to-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mb-10 border border-white/20">
+        <span className="text-white font-bold text-xl">C</span>
       </div>
       
       {/* Main Navigation */}
-      <div className="flex flex-col space-y-3 mb-8">
+      <div className="flex flex-col space-y-4 mb-10">
         <button
           onClick={() => setActiveSection('tables')}
-          className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 ${
+          className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
             activeSection === 'tables' 
-              ? 'bg-orange-500 text-white shadow-lg' 
-              : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'
+              ? 'bg-white text-purple-600 shadow-lg' 
+              : 'text-white/70 hover:text-white hover:bg-white/10'
           }`}
         >
-          <Home size={20} />
+          <Home size={22} />
+          {activeSection === 'tables' && (
+            <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-full" />
+          )}
         </button>
         
         <button
           onClick={() => setActiveSection('menu')}
-          className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 ${
+          className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
             activeSection === 'menu' 
-              ? 'bg-orange-500 text-white shadow-lg' 
-              : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'
+              ? 'bg-white text-purple-600 shadow-lg' 
+              : 'text-white/70 hover:text-white hover:bg-white/10'
           }`}
         >
-          <UtensilsCrossed size={20} />
+          <UtensilsCrossed size={22} />
+          {activeSection === 'menu' && (
+            <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-full" />
+          )}
         </button>
         
         <button
           onClick={() => setActiveSection('dashboard')}
-          className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-200 ${
+          className={`relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group ${
             activeSection === 'dashboard' 
-              ? 'bg-orange-500 text-white shadow-lg' 
-              : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'
+              ? 'bg-white text-purple-600 shadow-lg' 
+              : 'text-white/70 hover:text-white hover:bg-white/10'
           }`}
         >
-          <BarChart3 size={20} />
+          <BarChart3 size={22} />
+          {activeSection === 'dashboard' && (
+            <div className="absolute -right-8 top-1/2 -translate-y-1/2 w-1 h-8 bg-white rounded-full" />
+          )}
         </button>
       </div>
       
       {/* Secondary Navigation */}
-      <div className="flex-1 flex flex-col justify-end space-y-3">
-        <button className="w-12 h-12 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-50 flex items-center justify-center transition-all duration-200">
-          <Settings size={20} />
+      <div className="flex-1 flex flex-col justify-end space-y-4">
+        <button className="w-14 h-14 rounded-2xl text-white/50 hover:text-white/80 hover:bg-white/10 flex items-center justify-center transition-all duration-300">
+          <Settings size={22} />
         </button>
-        <button className="w-12 h-12 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-50 flex items-center justify-center transition-all duration-200">
-          <LogOut size={20} />
+        <button className="w-14 h-14 rounded-2xl text-white/50 hover:text-white/80 hover:bg-white/10 flex items-center justify-center transition-all duration-300">
+          <LogOut size={22} />
         </button>
-        <button className="w-12 h-12 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-50 flex items-center justify-center transition-all duration-200">
-          <User size={20} />
+        <button className="w-14 h-14 rounded-2xl text-white/50 hover:text-white/80 hover:bg-white/10 flex items-center justify-center transition-all duration-300">
+          <User size={22} />
         </button>
       </div>
     </div>
   );
 
   const TableGrid = () => (
-    <div className="p-6 h-full overflow-y-auto">
+    <div className="p-8 h-full overflow-y-auto bg-gradient-to-br from-gray-50 to-purple-50/30">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">CASHAA</h1>
-        <p className="text-gray-500">Quản lý bàn ăn</p>
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-3">
+          CASHAA
+        </h1>
+        <p className="text-gray-600 text-lg">Quản lý bàn ăn hiện đại</p>
       </div>
 
       {/* Search and Filter */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-4 mb-8">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400" size={20} />
           <input
             type="text"
-            placeholder="Tìm kiếm món ăn"
+            placeholder="Tìm kiếm món ăn..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-gray-50 border-0 rounded-xl focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all duration-200"
+            className="w-full pl-12 pr-6 py-4 bg-white/80 backdrop-blur-sm border-0 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:bg-white transition-all duration-300 shadow-lg text-lg"
           />
         </div>
-        <button className="w-12 h-12 bg-gray-50 hover:bg-gray-100 rounded-xl flex items-center justify-center transition-all duration-200">
-          <Filter size={20} className="text-gray-600" />
+        <button className="w-16 h-16 bg-white/80 backdrop-blur-sm hover:bg-white rounded-2xl flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-xl">
+          <Filter size={22} className="text-purple-600" />
         </button>
       </div>
 
       {/* View Toggle */}
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-3 mb-8">
         <button
           onClick={() => setShowRecent(false)}
-          className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
             !showRecent 
-              ? 'bg-orange-500 text-white shadow-lg' 
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg shadow-purple-500/25' 
+              : 'bg-white/80 backdrop-blur-sm text-purple-600 hover:bg-white shadow-md'
           }`}
         >
-          Bàn ăn
+          Sơ đồ bàn
         </button>
         <button
           onClick={() => setShowRecent(true)}
-          className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
             showRecent 
-              ? 'bg-orange-500 text-white shadow-lg' 
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg shadow-purple-500/25' 
+              : 'bg-white/80 backdrop-blur-sm text-purple-600 hover:bg-white shadow-md'
           }`}
         >
-          Gần đây
+          Món gần đây
         </button>
-        <button className="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 font-medium transition-all duration-200">
+        <button className="px-6 py-3 bg-white/80 backdrop-blur-sm text-purple-600 rounded-2xl hover:bg-white font-semibold transition-all duration-300 shadow-md">
           Mang về
         </button>
       </div>
 
       {/* Content */}
       {!showRecent ? (
-        <div className="grid grid-cols-8 gap-3">
+        <div className="grid grid-cols-8 gap-4">
           {Object.values(tables).map((table) => (
             <button
               key={table.id}
               onClick={() => setSelectedTable(table.id)}
-              className={`aspect-square rounded-xl flex flex-col items-center justify-center transition-all duration-200 hover:scale-105 ${
+              className={`aspect-square rounded-3xl flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg ${
                 selectedTable === table.id
-                  ? 'bg-orange-500 text-white shadow-lg'
+                  ? 'bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-xl shadow-purple-500/30'
                   : table.status === 'occupied'
-                  ? 'bg-red-50 text-red-600 border-2 border-red-200'
-                  : 'bg-gray-50 text-gray-600 border-2 border-gray-200 hover:border-orange-300'
+                  ? 'bg-gradient-to-br from-rose-400 to-rose-500 text-white shadow-xl shadow-rose-500/20'
+                  : 'bg-white/80 backdrop-blur-sm text-purple-600 border-2 border-purple-100 hover:border-purple-300 hover:bg-white'
               }`}
             >
               <div className="text-lg mb-1">
-                {table.status === 'occupied' ? '🔴' : '⚪'}
+                {table.status === 'occupied' ? '🟢' : '⚪'}
               </div>
-              <div className="font-semibold text-xs">{table.id}</div>
+              <div className="font-bold text-sm">{table.id}</div>
               {table.status === 'occupied' && (
-                <div className="text-xs opacity-75">
-                  {table.customers}
-                </div>
+                <>
+                  <div className="text-xs opacity-80 mt-1">
+                    {table.customers} người
+                  </div>
+                  <div className="text-xs opacity-70">
+                    {table.orderTime}
+                  </div>
+                </>
               )}
             </button>
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {getRecentMenuItems().map((item) => (
             <div
               key={item.id}
               onClick={() => addToOrder(item)}
-              className="bg-white rounded-xl p-4 border border-gray-100 hover:border-orange-300 cursor-pointer transition-all duration-200 hover:shadow-lg group"
+              className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-purple-100 hover:border-purple-300 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group"
             >
-              <div className="w-full h-16 bg-gray-100 rounded-lg mb-3 overflow-hidden">
-                <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+              <div className="w-full h-32 bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl mb-4 overflow-hidden">
+                <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
               </div>
-              <h3 className="font-semibold text-gray-800 mb-1 text-sm">{item.name}</h3>
-              <p className="text-xs text-gray-500 mb-2">{item.category}</p>
-              <p className="text-orange-600 font-bold text-sm">{item.price.toLocaleString('vi-VN')} VND</p>
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-bold text-gray-800 text-lg">{item.name}</h3>
+                {item.isPopular && (
+                  <div className="w-6 h-6 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full flex items-center justify-center">
+                    <Star size={12} className="text-white" />
+                  </div>
+                )}
+              </div>
+              <p className="text-sm text-gray-500 mb-3">{item.description}</p>
+              <div className="flex items-center justify-between">
+                <p className="text-purple-600 font-bold text-xl">{item.price.toLocaleString('vi-VN')}đ</p>
+                <div className="flex items-center text-amber-400">
+                  <Star size={14} className="fill-current" />
+                  <span className="text-xs text-gray-600 ml-1">{item.rating}</span>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -273,58 +412,87 @@ function App() {
   );
 
   const MenuSection = () => (
-    <div className="p-6 h-full overflow-y-auto">
+    <div className="p-8 h-full overflow-y-auto bg-gradient-to-br from-gray-50 to-purple-50/30">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Thực đơn</h1>
-        <p className="text-gray-500">Chọn món ăn cho bàn {selectedTable}</p>
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-3">
+          Khám phá thực đơn
+        </h1>
+        <p className="text-gray-600 text-lg">Chọn món ăn ngon cho bàn {selectedTable}</p>
       </div>
 
       {/* Search */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex gap-4 mb-8">
         <div className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400" size={20} />
           <input
             type="text"
-            placeholder="Tìm kiếm món ăn"
+            placeholder="Tìm kiếm món ăn..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-gray-50 border-0 rounded-xl focus:ring-2 focus:ring-orange-500 focus:bg-white transition-all duration-200"
+            className="w-full pl-12 pr-6 py-4 bg-white/80 backdrop-blur-sm border-0 rounded-2xl focus:ring-2 focus:ring-purple-500 focus:bg-white transition-all duration-300 shadow-lg text-lg"
           />
         </div>
       </div>
 
       {/* Categories */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        {CATEGORIES.map((category) => (
-          <button
-            key={category}
-            onClick={() => setSelectedCategory(category)}
-            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-              selectedCategory === category
-                ? 'bg-orange-500 text-white shadow-lg'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            {category}
-          </button>
-        ))}
+      <div className="flex flex-wrap gap-3 mb-8">
+        {CATEGORIES.map((category) => {
+          const IconComponent = category.icon;
+          return (
+            <button
+              key={category.id}
+              onClick={() => setSelectedCategory(category.id)}
+              className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
+                selectedCategory === category.id
+                  ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg shadow-purple-500/25'
+                  : 'bg-white/80 backdrop-blur-sm text-purple-600 hover:bg-white shadow-md'
+              }`}
+            >
+              <IconComponent size={18} />
+              {category.name}
+            </button>
+          );
+        })}
       </div>
 
       {/* Menu Items */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
         {filteredMenuItems.map((item) => (
           <div
             key={item.id}
             onClick={() => addToOrder(item)}
-            className="bg-white rounded-xl p-4 border border-gray-100 hover:border-orange-300 cursor-pointer transition-all duration-200 hover:shadow-lg group"
+            className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-purple-100 hover:border-purple-300 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2 group"
           >
-            <div className="w-full h-20 bg-gray-100 rounded-lg mb-3 overflow-hidden">
-              <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+            <div className="relative">
+              <div className="w-full h-40 bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl mb-4 overflow-hidden">
+                <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              {item.isPopular && (
+                <div className="absolute top-3 right-3 bg-gradient-to-r from-amber-400 to-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                  <Star size={12} className="fill-current" />
+                  Phổ biến
+                </div>
+              )}
             </div>
-            <h3 className="font-semibold text-gray-800 mb-1">{item.name}</h3>
-            <p className="text-sm text-gray-500 mb-2">{item.category}</p>
-            <p className="text-orange-600 font-bold">{item.price.toLocaleString('vi-VN')} VND</p>
+            
+            <div className="flex items-start justify-between mb-2">
+              <h3 className="font-bold text-gray-800 text-lg flex-1">{item.name}</h3>
+              <div className="flex items-center text-amber-400 ml-2">
+                <Star size={14} className="fill-current" />
+                <span className="text-xs text-gray-600 ml-1">{item.rating}</span>
+              </div>
+            </div>
+            
+            <p className="text-sm text-gray-500 mb-3 line-clamp-2">{item.description}</p>
+            <p className="text-sm text-purple-500 font-medium mb-4">{item.category}</p>
+            
+            <div className="flex items-center justify-between">
+              <p className="text-purple-600 font-bold text-xl">{item.price.toLocaleString('vi-VN')}đ</p>
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <Plus size={18} className="text-white" />
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -332,66 +500,82 @@ function App() {
   );
 
   const Dashboard = () => (
-    <div className="p-6 h-full overflow-y-auto">
+    <div className="p-8 h-full overflow-y-auto bg-gradient-to-br from-gray-50 to-purple-50/30">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Bảng điều khiển</h1>
-        <p className="text-gray-500">Tổng quan hoạt động nhà hàng</p>
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-3">
+          Bảng điều khiển
+        </h1>
+        <p className="text-gray-600 text-lg">Tổng quan hoạt động nhà hàng</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-gray-800">Tổng doanh thu</h3>
-            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-              <BarChart3 size={20} className="text-green-600" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-purple-100 shadow-xl">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-800">Doanh thu hôm nay</h3>
+            <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-emerald-500 rounded-2xl flex items-center justify-center">
+              <BarChart3 size={24} className="text-white" />
             </div>
           </div>
-          <p className="text-3xl font-bold text-gray-900 mb-2">2,450,000đ</p>
-          <p className="text-sm text-green-600">+12% từ hôm qua</p>
+          <p className="text-4xl font-bold text-gray-900 mb-3">3,250,000đ</p>
+          <p className="text-sm text-emerald-600 flex items-center">
+            <span className="text-emerald-500">↗</span>
+            <span className="ml-1">+15.5% từ hôm qua</span>
+          </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-gray-800">Số đơn hàng</h3>
-            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-              <Receipt size={20} className="text-blue-600" />
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-purple-100 shadow-xl">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-800">Đơn hàng</h3>
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-500 rounded-2xl flex items-center justify-center">
+              <Receipt size={24} className="text-white" />
             </div>
           </div>
-          <p className="text-3xl font-bold text-gray-900 mb-2">147</p>
-          <p className="text-sm text-blue-600">+8% từ hôm qua</p>
+          <p className="text-4xl font-bold text-gray-900 mb-3">184</p>
+          <p className="text-sm text-blue-600 flex items-center">
+            <span className="text-blue-500">↗</span>
+            <span className="ml-1">+12% từ hôm qua</span>
+          </p>
         </div>
 
-        <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-gray-800">Bàn đang sử dụng</h3>
-            <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-              <Users size={20} className="text-orange-600" />
+        <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-purple-100 shadow-xl">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-gray-800">Bàn hoạt động</h3>
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-500 rounded-2xl flex items-center justify-center">
+              <Users size={24} className="text-white" />
             </div>
           </div>
-          <p className="text-3xl font-bold text-gray-900 mb-2">{Object.values(tables).filter(t => t.status === 'occupied').length}/32</p>
-          <p className="text-sm text-orange-600">15% công suất</p>
+          <p className="text-4xl font-bold text-gray-900 mb-3">{Object.values(tables).filter(t => t.status === 'occupied').length}/32</p>
+          <p className="text-sm text-purple-600 flex items-center">
+            <span className="text-purple-500">◐</span>
+            <span className="ml-1">22% công suất</span>
+          </p>
         </div>
       </div>
 
       {/* Tables Overview */}
-      <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
-        <h3 className="font-semibold text-gray-800 mb-4">Trạng thái bàn</h3>
-        <div className="grid grid-cols-8 gap-2">
+      <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-purple-100 shadow-xl">
+        <h3 className="text-2xl font-bold text-gray-800 mb-6">Trạng thái bàn chi tiết</h3>
+        <div className="grid grid-cols-8 gap-3">
           {Object.values(tables).slice(0, 32).map((table) => (
             <div
               key={table.id}
-              className={`aspect-square rounded-lg flex flex-col items-center justify-center text-xs ${
+              className={`aspect-square rounded-2xl flex flex-col items-center justify-center text-sm transition-all duration-300 ${
                 table.status === 'occupied'
-                  ? 'bg-red-100 text-red-800'
-                  : 'bg-green-100 text-green-800'
+                  ? 'bg-gradient-to-br from-rose-400 to-rose-500 text-white shadow-lg'
+                  : 'bg-gradient-to-br from-emerald-400 to-emerald-500 text-white shadow-lg'
               }`}
             >
-              <div className="text-sm mb-1">
-                {table.status === 'occupied' ? '🔴' : '⚪'}
+              <div className="text-base mb-1">
+                {table.status === 'occupied' ? '🟢' : '⚪'}
               </div>
-              <div className="font-semibold">{table.id}</div>
+              <div className="font-bold">{table.id}</div>
+              {table.status === 'occupied' && (
+                <div className="text-xs opacity-80 mt-1">
+                  {table.customers}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -404,65 +588,72 @@ function App() {
     const totalAmount = getTotalAmount();
 
     return (
-      <div className="w-80 bg-white border-l border-gray-100 flex flex-col h-screen">
+      <div className="w-96 bg-white/95 backdrop-blur-md border-l border-purple-100 flex flex-col h-screen shadow-2xl">
         {/* Header - Fixed */}
-        <div className="p-6 border-b border-gray-100 bg-white">
-          <h2 className="text-xl font-bold text-gray-900 mb-1">BÀN {selectedTable}</h2>
-          <p className="text-sm text-gray-500 flex items-center">
-            <Users size={16} className="mr-1" />
-            {tables[selectedTable]?.status === 'occupied' ? 
-              `${tables[selectedTable]?.customers} khách` : 
-              'Bàn trống'
-            }
-          </p>
+        <div className="p-8 border-b border-purple-100 bg-white/90 backdrop-blur-md">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl flex items-center justify-center">
+              <span className="text-white font-bold text-lg">{selectedTable}</span>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">BÀN {selectedTable}</h2>
+              <p className="text-sm text-gray-500 flex items-center">
+                <Users size={16} className="mr-2 text-purple-400" />
+                {tables[selectedTable]?.status === 'occupied' ? 
+                  `${tables[selectedTable]?.customers} khách • ${tables[selectedTable]?.orderTime}` : 
+                  'Bàn trống'
+                }
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Order Items - Scrollable */}
-        <div className="flex-1 overflow-y-auto p-6">
+        <div className="flex-1 overflow-y-auto p-8">
           {currentOrders.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <ShoppingCart size={24} className="text-gray-400" />
+            <div className="text-center py-16">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-100 to-purple-50 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <ShoppingCart size={32} className="text-purple-400" />
               </div>
-              <p className="text-gray-500 font-medium">Chưa có món nào</p>
-              <p className="text-sm text-gray-400 mt-1">Thêm món từ thực đơn</p>
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Chưa có món nào</h3>
+              <p className="text-gray-500">Thêm món từ thực đơn để bắt đầu</p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {currentOrders.map((item) => (
-                <div key={item.id} className="bg-gray-50 rounded-xl p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-12 h-12 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+                <div key={item.id} className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-purple-100 shadow-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-50 rounded-2xl overflow-hidden flex-shrink-0">
                       <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-start mb-2">
-                        <h4 className="font-semibold text-gray-900 text-sm truncate">{item.name}</h4>
+                        <h4 className="font-bold text-gray-900 text-lg truncate">{item.name}</h4>
                         <button
                           onClick={() => updateQuantity(item.id, 0)}
-                          className="text-gray-400 hover:text-red-500 transition-colors ml-2"
+                          className="text-gray-400 hover:text-red-500 transition-colors ml-3 p-1"
                         >
-                          <X size={16} />
+                          <X size={18} />
                         </button>
                       </div>
-                      <p className="text-sm text-orange-600 font-medium mb-3">
-                        {item.price.toLocaleString('vi-VN')} VND
-                      </p>
+                      <p className="text-sm text-gray-500 mb-3">{item.description}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500">Số lượng:</span>
-                        <div className="flex items-center gap-2">
+                        <span className="text-purple-600 font-bold text-xl">
+                          {item.price.toLocaleString('vi-VN')}đ
+                        </span>
+                        <div className="flex items-center gap-3">
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            className="w-8 h-8 rounded-lg bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition-colors"
+                            className="w-10 h-10 rounded-2xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
                           >
-                            <Minus size={14} />
+                            <Minus size={16} />
                           </button>
-                          <span className="w-8 text-center font-semibold text-gray-900">{item.quantity}</span>
+                          <span className="w-8 text-center font-bold text-gray-900 text-lg">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            className="w-8 h-8 rounded-lg bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center transition-colors"
+                            className="w-10 h-10 rounded-2xl bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white flex items-center justify-center transition-all shadow-lg"
                           >
-                            <Plus size={14} />
+                            <Plus size={16} />
                           </button>
                         </div>
                       </div>
@@ -476,47 +667,51 @@ function App() {
 
         {/* Payment Section - Fixed */}
         {currentOrders.length > 0 && (
-          <div className="border-t border-gray-100 bg-gray-50 p-6">
-            <div className="bg-white rounded-xl p-4 mb-4 border border-gray-100">
-              <h3 className="text-lg font-bold text-orange-600 text-center mb-4">PHIẾU THANH TOÁN</h3>
+          <div className="border-t border-purple-100 bg-gradient-to-br from-purple-50/50 to-white p-8">
+            <div className="bg-white rounded-3xl p-6 mb-6 border-2 border-purple-100 shadow-xl">
+              <h3 className="text-2xl font-bold text-center bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-6">
+                PHIẾU THANH TOÁN
+              </h3>
               
-              <div className="space-y-2 text-sm mb-4">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">GHI CHÚ BÀN:</span>
-                  <span className="font-medium">Bàn {selectedTable}</span>
+              <div className="space-y-3 text-base mb-6">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Bàn số:</span>
+                  <span className="font-bold text-purple-600">#{String(selectedTable).padStart(2, '0')}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">MÃ ĐƠN HÀNG:</span>
-                  <span className="font-medium">#{String(selectedTable).padStart(3, '0')}</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Thời gian:</span>
+                  <span className="font-bold">{new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">VÀO:</span>
-                  <span className="font-medium">{new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}</span>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Số món:</span>
+                  <span className="font-bold">{currentOrders.reduce((sum, item) => sum + item.quantity, 0)}</span>
                 </div>
               </div>
               
-              <div className="border-t border-gray-200 pt-3">
+              <div className="border-t-2 border-purple-100 pt-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-gray-900">TỔNG TÍNH:</span>
-                  <span className="text-xl font-bold text-orange-600">
-                    {totalAmount.toLocaleString('vi-VN')} VND
+                  <span className="text-xl font-bold text-gray-900">TỔNG CỘNG:</span>
+                  <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+                    {totalAmount.toLocaleString('vi-VN')}đ
                   </span>
                 </div>
               </div>
             </div>
             
-            <div className="space-y-3">
-              <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-xl font-semibold transition-colors shadow-lg">
+            <div className="space-y-4">
+              <button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white py-4 rounded-2xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl">
                 THANH TOÁN
               </button>
-              <button className="w-full bg-white hover:bg-gray-50 text-gray-700 py-3 rounded-xl font-semibold border border-gray-200 transition-colors flex items-center justify-center gap-2">
-                <Printer size={18} />
-                IN BILL
-              </button>
-              <button className="w-full bg-white hover:bg-gray-50 text-gray-700 py-3 rounded-xl font-semibold border border-gray-200 transition-colors flex items-center justify-center gap-2">
-                <FileText size={18} />
-                IN ORDER
-              </button>
+              <div className="grid grid-cols-2 gap-3">
+                <button className="bg-white hover:bg-gray-50 text-purple-600 py-3 rounded-2xl font-bold border-2 border-purple-200 transition-all flex items-center justify-center gap-2">
+                  <Printer size={18} />
+                  IN HÓA ĐƠN
+                </button>
+                <button className="bg-white hover:bg-gray-50 text-purple-600 py-3 rounded-2xl font-bold border-2 border-purple-200 transition-all flex items-center justify-center gap-2">
+                  <FileText size={18} />
+                  GỬI BẾP
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -525,7 +720,7 @@ function App() {
   };
 
   return (
-    <div className="h-screen bg-gray-50 flex overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-gray-100 to-purple-50 flex overflow-hidden">
       <Sidebar />
       
       <div className="flex-1 flex overflow-hidden">
