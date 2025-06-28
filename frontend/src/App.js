@@ -224,6 +224,14 @@ function App() {
   const [showItemNoteDialog, setShowItemNoteDialog] = useState(false);
   const [tableFilter, setTableFilter] = useState('all'); // 'all', 'available', 'used'
   const [showClearDialog, setShowClearDialog] = useState(false);
+  const [showPaymentPage, setShowPaymentPage] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('cash'); // 'cash' or 'transfer'
+  const [discountType, setDiscountType] = useState('none'); // 'none', 'percent', 'amount'
+  const [discountValue, setDiscountValue] = useState(0);
+  const [partialPayment, setPartialPayment] = useState(false);
+  const [paidAmount, setPaidAmount] = useState(0);
+  const [showPrintPreview, setShowPrintPreview] = useState(false);
+  const [printType, setPrintType] = useState(''); // 'bill' or 'order'
   
   // Dashboard states
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
