@@ -1015,7 +1015,7 @@ function App() {
                         
                         {/* Item Note */}
                         {itemNote ? (
-                          <div className="bg-primary-bg rounded-lg p-2 mb-2 border border-primary-stroke">
+                          <div className="bg-primary-bg rounded-lg p-2 mb-2 shadow-sm">
                             <div className="flex items-center justify-between">
                               <p className="text-xs text-primary-paragraph">{itemNote}</p>
                               <button
