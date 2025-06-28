@@ -1187,22 +1187,6 @@ function App() {
               >
                 THANH TOÁN
               </button>
-              <div className="grid grid-cols-2 gap-2">
-                <button 
-                  onClick={printBill}
-                  className="bg-primary-main hover:bg-primary-secondary text-primary-button py-2 rounded-xl font-bold transition-all flex items-center justify-center gap-1 shadow-md"
-                >
-                  <Printer size={16} />
-                  <span className="text-xs">IN HÓA ĐƠN</span>
-                </button>
-                <button 
-                  onClick={printOrder}
-                  className="bg-primary-main hover:bg-primary-secondary text-primary-button py-2 rounded-xl font-bold transition-all flex items-center justify-center gap-1 shadow-md"
-                >
-                  <FileText size={16} />
-                  <span className="text-xs">GỬI BẾP</span>
-                </button>
-              </div>
             </div>
           </div>
         )}
