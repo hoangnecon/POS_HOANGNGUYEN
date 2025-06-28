@@ -997,7 +997,7 @@ function App() {
                 const itemKey = `${selectedTable}-${item.id}`;
                 const itemNote = itemNotes[itemKey];
                 return (
-                  <div key={item.id} className="bg-primary-secondary rounded-2xl p-4 border border-primary-stroke">
+                  <div key={item.id} className="bg-primary-secondary rounded-2xl p-4 shadow-md">
                     <div className="flex items-start gap-3">
                       <div className="w-12 h-12 bg-primary-bg rounded-xl overflow-hidden flex-shrink-0">
                         <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
