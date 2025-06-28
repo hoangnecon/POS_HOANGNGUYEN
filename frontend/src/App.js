@@ -503,30 +503,30 @@ function App() {
       <div className="flex gap-3 mb-6">
         <button
           onClick={() => setTableFilter('all')}
-          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 border ${
+          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-md ${
             tableFilter === 'all' 
-              ? 'bg-primary-button text-primary-main shadow-lg border-primary-button' 
-              : 'bg-primary-main text-primary-button hover:bg-primary-secondary border-primary-stroke'
+              ? 'bg-primary-button text-primary-main shadow-lg' 
+              : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
           }`}
         >
           Tất cả bàn
         </button>
         <button
           onClick={() => setTableFilter('available')}
-          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 border ${
+          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-md ${
             tableFilter === 'available' 
-              ? 'bg-primary-button text-primary-main shadow-lg border-primary-button' 
-              : 'bg-primary-main text-primary-button hover:bg-primary-secondary border-primary-stroke'
+              ? 'bg-primary-button text-primary-main shadow-lg' 
+              : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
           }`}
         >
           Còn trống
         </button>
         <button
           onClick={() => setTableFilter('used')}
-          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 border ${
+          className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-md ${
             tableFilter === 'used' 
-              ? 'bg-primary-button text-primary-main shadow-lg border-primary-button' 
-              : 'bg-primary-main text-primary-button hover:bg-primary-secondary border-primary-stroke'
+              ? 'bg-primary-button text-primary-main shadow-lg' 
+              : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
           }`}
         >
           Đã sử dụng
