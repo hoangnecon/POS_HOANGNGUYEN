@@ -1240,7 +1240,7 @@ function App() {
               {/* Header */}
               <div className="flex items-center gap-4 mb-8">
                 <button
-                  onClick={() => setShowPaymentPage(false)}
+                  onClick={() => setShowPaymentDialog(false)}
                   className="w-12 h-12 bg-primary-secondary rounded-xl flex items-center justify-center hover:bg-primary-highlight transition-colors"
                 >
                   <ArrowLeft size={20} className="text-primary-button" />
