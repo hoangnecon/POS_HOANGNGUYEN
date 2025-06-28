@@ -1187,7 +1187,7 @@ function App() {
             
             <div className="space-y-3">
               <button className="w-full bg-primary-button hover:bg-primary-highlight text-primary-main py-3 rounded-xl font-bold text-lg transition-all shadow-lg"
-                onClick={() => setShowPaymentPage(true)}
+                onClick={() => setShowPaymentDialog(true)}
               >
                 THANH TOÁN
               </button>
