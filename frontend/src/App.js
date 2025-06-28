@@ -230,8 +230,7 @@ function App() {
   const [discountValue, setDiscountValue] = useState(0);
   const [partialPayment, setPartialPayment] = useState(false);
   const [paidAmount, setPaidAmount] = useState(0);
-  const [showPrintPreview, setShowPrintPreview] = useState(false);
-  const [printType, setPrintType] = useState(''); // 'bill' or 'order'
+
   
   // Dashboard states
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
