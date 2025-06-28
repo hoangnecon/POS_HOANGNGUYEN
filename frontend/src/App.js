@@ -1247,6 +1247,9 @@ function App() {
             </div>
           </div>
         )}
+      </div>
+    );
+  };
 
   const PaymentPage = () => {
     const currentOrders = getCurrentOrders();
