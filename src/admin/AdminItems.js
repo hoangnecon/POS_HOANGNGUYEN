@@ -180,7 +180,7 @@ const AdminItems = ({
           className={`px-4 py-2 rounded-xl font-medium transition-colors shadow-md ${
             itemFilter === 'all'
               ? 'bg-primary-button text-primary-main'
-              : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
+              : 'bg-primary-main text-primary-headline hover:bg-primary-secondary'
           }`}
         >
           Tất cả ({menuItems.length})
@@ -192,7 +192,7 @@ const AdminItems = ({
             className={`px-4 py-2 rounded-xl font-medium transition-colors shadow-md ${
               itemFilter === menu.id
                 ? 'bg-primary-button text-primary-main'
-                : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
+                : 'bg-primary-main text-primary-headline hover:bg-primary-secondary'
             }`}
           >
             {menu.name} ({menuItems.filter((item) => item.menuType === menu.id).length})
@@ -224,7 +224,7 @@ const AdminItems = ({
             <p className="text-sm text-primary-paragraph mb-2">
               {item.category}
             </p>
-            <p className="text-lg font-bold text-primary-button mb-3">
+            <p className="text-lg font-bold text-primary-headline mb-3">
               {item.price.toLocaleString('vi-VN')}đ
             </p>
 
@@ -234,7 +234,7 @@ const AdminItems = ({
                   setSelectedMenuItem(item);
                   setShowEditItemDialog(true);
                 }}
-                className="flex-1 bg-primary-secondary text-primary-button py-2 rounded-lg font-medium hover:bg-primary-stroke transition-colors shadow-md"
+                className="flex-1 bg-primary-button text-white py-2 rounded-lg font-medium hover:bg-primary-stroke transition-colors shadow-md"
               >
                 Sửa
               </button>

@@ -1,5 +1,8 @@
 import React from 'react';
-
+import { 
+  GalleryVertical,
+  ShoppingBag,
+ } from 'lucide-react';
 const TableGrid = ({
   tables,
   selectedTable,
@@ -74,7 +77,6 @@ const TableGrid = ({
         </button>
       </div>
 
-      {/* Recent Items Row */}
       {recentItems.length > 0 && (
         <div className="mb-8">
           <h3 className="text-lg font-bold text-primary-headline mb-4">
@@ -87,7 +89,7 @@ const TableGrid = ({
                 onClick={() => addToOrder(item)}
                 className="flex-shrink-0 px-4 py-2 bg-primary-main rounded-xl hover:bg-primary-secondary transition-all duration-300 shadow-md hover:shadow-lg"
               >
-                <span className="text-sm font-medium text-primary-headline whitespace-nowrap">
+                <span className="text-sm font-medium text-primary-paragraph whitespace-nowrap">
                   {item.name}
                 </span>
               </button>
@@ -97,38 +99,45 @@ const TableGrid = ({
       )}
 
       {/* Table Grid */}
-      <div className="grid grid-cols-8 gap-4">
+      <div className="grid grid-cols-6 gap-4">
         {/* Takeaway Button - First position */}
         <button
           onClick={() => setSelectedTable('takeaway')}
-          className={`aspect-square rounded-3xl flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg ${
+          className={`h-40 rounded-3xl flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg ${
             selectedTable === 'takeaway'
               ? 'bg-primary-button text-primary-main shadow-xl'
               : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
           }`}
         >
-          <div className="text-lg mb-1">📦</div>
-          <div className="font-bold text-xs">Mang về</div>
+          <div className="text-lg mb-1"><ShoppingBag size={30}></ShoppingBag></div>
+          <div className="font-bold text-lg">Mang về</div>
         </button>
 
         {/* Regular Tables */}
-        {getFilteredTables().map((table) => {
-          const hasOrders = orders[table.id] && orders[table.id].length > 0;
-          return (
-            <button
-              key={table.id}
-              onClick={() => setSelectedTable(table.id)}
-              className={`aspect-square rounded-3xl flex flex-col items-center justify-center transition-all duration-300 hover:scale-105 shadow-lg ${
-                selectedTable === table.id
-                  ? 'bg-primary-button text-primary-main shadow-xl'
-                  : hasOrders
-                  ? 'bg-primary-button-light text-primary-button shadow-md'
-                  : 'bg-primary-main text-primary-button hover:bg-primary-secondary'
-              }`}
-            >
-              <div className="text-lg mb-1">{hasOrders ? '🟢' : '⚪'}</div>
-              <div className="font-bold text-sm">{table.id}</div>
-            </button>
+{getFilteredTables().map((table) => {
+  const hasOrders = orders[table.id] && orders[table.id].length > 0;
+  return (
+    <button
+      key={table.id}
+      onClick={() => setSelectedTable(table.id)}
+      className={`
+        h-40 rounded-3xl flex flex-col items-center justify-center 
+        transition-all duration-300 hover:scale-105 shadow-lg
+        font-bold text-lg
+        ${
+          selectedTable === table.id
+            ? 'bg-primary-button text-white shadow-xl'
+            : hasOrders
+              ? 'bg-primary-button-light text-primary-paragraph shadow-md'
+              : 'bg-primary-main text-primary-paragraph hover:bg-primary-secondary'
+        }
+      `}
+    >
+      <div className="mb-1">
+        <GalleryVertical size={30} />
+      </div>
+      <div>Bàn {table.id}</div>
+    </button>
           );
         })}
       </div>

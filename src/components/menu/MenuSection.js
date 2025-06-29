@@ -111,12 +111,12 @@ const MenuSection = ({
             <h3 className="font-bold text-primary-headline text-lg mb-2">
               {item.name}
             </h3>
-            <p className="text-sm text-primary-button font-medium mb-4">
+            <p className="text-sm text-primary-paragraph font-medium mb-4">
               {item.category}
             </p>
 
             <div className="flex items-center justify-between">
-              <p className="text-primary-button font-bold text-xl">
+              <p className="text-primary-headline font-bold text-xl">
                 {item.price.toLocaleString('vi-VN')}đ
               </p>
               <div className="w-10 h-10 bg-primary-button rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">

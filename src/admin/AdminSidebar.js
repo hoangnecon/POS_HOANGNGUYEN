@@ -12,11 +12,6 @@ import {
 const AdminSidebar = ({ adminSection, setAdminSection, handleLogout }) => {
   return (
     <div className="w-20 sidebar-gradient flex flex-col items-center py-8 shadow-2xl">
-      {/* Logo */}
-      <div className="w-14 h-14 bg-primary-button-light backdrop-blur-md rounded-2xl flex items-center justify-center mb-10 border border-white/20">
-        <Shield className="text-white" size={24} />
-      </div>
-
       {/* Main Navigation */}
       <div className="flex flex-col space-y-4 mb-10">
         <button

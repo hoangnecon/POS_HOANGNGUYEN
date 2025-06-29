@@ -90,7 +90,7 @@ const AdminDashboard = ({
             type="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="px-4 py-2 bg-primary-main rounded-xl text-primary-headline focus:ring-2 focus:ring-primary-highlight shadow-md"
+            className="px-4 py-2 bg-primary-main rounded-xl text-primary-headline focus:ring-2 focus:ring-sidebar-gradient shadow-md"
           />
         </div>
 
@@ -110,7 +110,7 @@ const AdminDashboard = ({
         <div className="bg-primary-main rounded-3xl p-6 shadow-xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-primary-headline">Tổng doanh thu</h3>
-            <div className="w-10 h-10 bg-primary-button rounded-2xl flex items-center justify-center">
+            <div className="w-10 h-10 sidebar-gradient rounded-2xl flex items-center justify-center">
               <DollarSign size={20} className="text-primary-main" />
             </div>
           </div>
@@ -125,7 +125,7 @@ const AdminDashboard = ({
         <div className="bg-primary-main rounded-3xl p-6 shadow-xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-primary-headline">Tổng đơn hàng</h3>
-            <div className="w-10 h-10 bg-primary-button rounded-2xl flex items-center justify-center">
+            <div className="w-10 h-10 sidebar-gradient rounded-2xl flex items-center justify-center">
               <Receipt size={20} className="text-primary-main" />
             </div>
           </div>
@@ -138,7 +138,7 @@ const AdminDashboard = ({
         <div className="bg-primary-main rounded-3xl p-6 shadow-xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-primary-headline">Số món ăn</h3>
-            <div className="w-10 h-10 bg-primary-button rounded-2xl flex items-center justify-center">
+            <div className="w-10 h-10 sidebar-gradient rounded-2xl flex items-center justify-center">
               <UtensilsCrossed size={20} className="text-primary-main" />
             </div>
           </div>
@@ -149,7 +149,7 @@ const AdminDashboard = ({
         <div className="bg-primary-main rounded-3xl p-6 shadow-xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-primary-headline">Loại menu</h3>
-            <div className="w-10 h-10 bg-primary-button rounded-2xl flex items-center justify-center">
+            <div className="w-10 h-10 sidebar-gradient rounded-2xl flex items-center justify-center">
               <Package size={20} className="text-primary-main" />
             </div>
           </div>

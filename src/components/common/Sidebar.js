@@ -11,11 +11,6 @@ import {
 const Sidebar = ({ activeSection, setActiveSection, handleLogout }) => {
   return (
     <div className="w-20 sidebar-gradient flex flex-col items-center py-8 shadow-2xl">
-      {/* Logo */}
-      <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-10 border border-white/20 bg-primary-button">
-        <span className="text-white font-bold text-xl">C</span>
-      </div>
-
       {/* Main Navigation */}
       <div className="flex flex-col space-y-4 mb-10">
         <button
@@ -65,7 +60,7 @@ const Sidebar = ({ activeSection, setActiveSection, handleLogout }) => {
       <div className="flex-1 flex flex-col justify-end space-y-4">
         <button
           onClick={handleLogout}
-          className="w-14 h-14 rounded-2xl bg-primary-button text-white/50 hover:text-white/80 hover:bg-primary-highlight flex items-center justify-center transition-all duration-300"
+          className="w-14 h-14 rounded-2xl text-white/50 hover:text-white/80 hover:bg-primary-highlight flex items-center justify-center transition-all duration-300"
         >
           <LogOut size={22} />
         </button>

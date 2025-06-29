@@ -52,7 +52,7 @@ function App() {
     // MOCKUP TABLE STATE
     const [tables, setTables] = useState(() => {
         const initialTables = {};
-        for (let i = 1; i <= 32; i++) {
+        for (let i = 1; i <= 17; i++) {
           initialTables[i] = { id: i };
         }
         return initialTables;

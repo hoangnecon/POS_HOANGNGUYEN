@@ -400,9 +400,9 @@ const OrderPanel = ({
                       </div>
 
                       {itemNote ? (
-                        <div className="bg-primary-bg rounded-lg p-2 mb-2 shadow-sm">
+                        <div className="rounded-lg p-2 mb-2 shadow-sm">
                           <div className="flex items-center justify-between">
-                            <p className="text-xs text-primary-paragraph">
+                            <p className="text-xs text-primary-headline">
                               {itemNote}
                             </p>
                             <button
@@ -416,7 +416,7 @@ const OrderPanel = ({
                       ) : (
                         <button
                           onClick={() => openItemNoteDialog(item.id)}
-                          className="flex items-center gap-1 text-xs text-primary-button hover:text-primary-highlight mb-2"
+                          className="flex items-center gap-1 text-xs text-primary-paragraph hover:text-primary-highlight mb-2"
                         >
                           <MessageSquare size={12} />
                           Thêm ghi chú
@@ -424,7 +424,7 @@ const OrderPanel = ({
                       )}
 
                       <div className="flex items-center justify-between">
-                        <span className="text-primary-button font-bold text-lg">
+                        <span className="text-primary-headline font-bold text-lg">
                           {item.price.toLocaleString('vi-VN')}đ
                         </span>
                         <div className="flex items-center gap-2">
