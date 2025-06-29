@@ -108,7 +108,7 @@ const Dashboard = ({
             <h3 className="text-lg font-bold text-primary-headline">
               Tổng doanh thu
             </h3>
-            <div className="w-10 h-10 bg-primary-button rounded-2xl flex items-center justify-center">
+            <div className="w-10 h-10 sidebar-gradient rounded-2xl flex items-center justify-center">
               <DollarSign size={20} className="text-primary-main" />
             </div>
           </div>
@@ -125,14 +125,14 @@ const Dashboard = ({
         <div className="bg-primary-main rounded-3xl p-6 shadow-xl">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-primary-headline">Tiền mặt</h3>
-            <div className="w-10 h-10 bg-primary-button rounded-2xl flex items-center justify-center">
+            <div className="w-10 h-10 sidebar-gradient rounded-2xl flex items-center justify-center">
               <Banknote size={20} className="text-primary-main" />
             </div>
           </div>
           <p className="text-3xl font-bold text-primary-headline mb-2">
             {revenueData.cash.toLocaleString('vi-VN')}đ
           </p>
-          <p className="text-sm text-primary-headline">
+          <p className="text-sm text-primary-paragraph">
             {ordersForDate.filter((o) => o.paymentMethod === 'cash').length} đơn
             hàng
           </p>
@@ -143,14 +143,14 @@ const Dashboard = ({
             <h3 className="text-lg font-bold text-primary-headline">
               Chuyển khoản
             </h3>
-            <div className="w-10 h-10 bg-primary-tertiary rounded-2xl flex items-center justify-center">
+            <div className="w-10 h-10 sidebar-gradient rounded-2xl flex items-center justify-center">
               <CreditCard size={20} className="text-primary-main" />
             </div>
           </div>
           <p className="text-3xl font-bold text-primary-headline mb-2">
             {revenueData.transfer.toLocaleString('vi-VN')}đ
           </p>
-          <p className="text-sm text-primary-tertiary">
+          <p className="text-sm text-primary-paragraph">
             {
               ordersForDate.filter((o) => o.paymentMethod === 'transfer')
                 .length
@@ -164,8 +164,8 @@ const Dashboard = ({
             <h3 className="text-lg font-bold text-primary-headline">
               Tổng đơn hàng
             </h3>
-            <div className="w-10 h-10 bg-primary-secondary rounded-2xl flex items-center justify-center">
-              <Receipt size={20} className="text-primary-button" />
+            <div className="w-10 h-10 sidebar-gradient rounded-2xl flex items-center justify-center">
+              <Receipt size={20} className="text-primary-main" />
             </div>
           </div>
           <p className="text-3xl font-bold text-primary-headline mb-2">

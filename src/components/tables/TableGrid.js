@@ -1,3 +1,5 @@
+// src/components/tables/TableGrid.js
+
 import React from 'react';
 import { GalleryVertical, ShoppingBag } from 'lucide-react';
 
@@ -11,6 +13,8 @@ const TableGrid = ({
   recentItems,
   menuItems,
   addToOrder,
+  autoOpenMenu,
+  handleAutoOpenMenuToggle,
 }) => {
   const getRecentMenuItems = () => {
     if (!recentItems || !menuItems) return [];
@@ -80,18 +84,37 @@ const TableGrid = ({
         </button>
       </div>
 
-      {/* Recent Items */}
-      {recentItems?.length > 0 && (
-        <div className="mb-8">
-          <h3 className="text-lg font-bold text-primary-headline mb-4">
+      {/* Recent Items & Auto-open Menu Toggle */}
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-bold text-primary-headline">
             Món gần đây
           </h3>
-          <div className="flex gap-3 overflow-x-auto pb-2">
+          <div className="flex items-center gap-2">
+            <label htmlFor="autoOpenMenu" className="text-sm font-medium text-primary-paragraph">
+              Tự động mở menu
+            </label>
+            <button
+                onClick={handleAutoOpenMenuToggle}
+                className={`relative inline-flex items-center h-6 rounded-full w-11 transition-colors duration-300 focus:outline-none ${
+                    autoOpenMenu ? 'bg-primary-button' : 'bg-gray-300'
+                }`}
+                id="autoOpenMenu"
+            >
+                <span
+                    className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform duration-300 ${
+                        autoOpenMenu ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                />
+            </button>
+          </div>
+        </div>
+        <div className="flex gap-3 overflow-x-auto pb-2">
             {getRecentMenuItems().map((item) => (
               <button
                 key={item.id}
                 onClick={() => addToOrder(item)}
-                className="flex-shrink-0 px 4 py-2 bg-primary-main rounded-xl hover:bg-primary-secondary transition-all duration-300 shadow-md hover:shadow-lg"
+                className="flex-shrink-0 px-4 py-2 bg-primary-main rounded-xl hover:bg-primary-secondary transition-all duration-300 shadow-md hover:shadow-lg"
                 aria-label={`Add ${item.name} to order`}
               >
                 <span className="text-sm font-medium text-primary-paragraph whitespace-nowrap">
@@ -99,10 +122,9 @@ const TableGrid = ({
                 </span>
               </button>
             ))}
-          </div>
         </div>
-      )}
-
+      </div>
+      
       {/* Table Grid Wrapper with scroll */}
       <div className="flex-1 overflow-y-auto">
         <div className="grid grid-cols-6 gap-4">
