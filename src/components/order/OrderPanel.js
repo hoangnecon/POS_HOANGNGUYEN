@@ -85,8 +85,6 @@ const PaymentDialog = ({
                 </p>
               </div>
             </div>
-  
-            {/* Order Items - Scrollable */}
             <div className="mb-6">
               <h3 className="text-xl font-bold text-primary-headline mb-4">Chi tiết đơn hàng</h3>
               <div className="space-y-3 max-h-64 overflow-y-auto">
@@ -319,8 +317,7 @@ const OrderPanel = ({
   const totalAmount = getTotalAmount();
 
   return (
-    <div className="w-[480px] bg-primary-main flex flex-col h-screen shadow-2xl">
-      {/* Header - Fixed */}
+    <div className="w-96 bg-primary-main flex flex-col h-screen shadow-2xl">
       <div className="p-6 bg-primary-main shadow-md">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
