@@ -1,3 +1,4 @@
+// src/components/menu/MenuSection.js
 import React from 'react';
 import { Search, Plus, Star } from 'lucide-react';
 
@@ -11,34 +12,31 @@ const MenuSection = ({
   setSelectedMenuType,
   menuItems,
   menuTypes,
-  categories,
+  categories, // categories giờ là một prop
   addToOrder,
 }) => {
   const filteredMenuItems = menuItems.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesMenuType = item.menuType === selectedMenuType;
 
+    const categoryObject = categories.find(cat => cat.id === selectedCategory);
+    const categoryName = categoryObject ? categoryObject.name : '';
+
     if (selectedCategory === 'all') return matchesSearch && matchesMenuType;
     if (selectedCategory === 'popular')
       return matchesSearch && matchesMenuType && item.isPopular;
 
-    const matchesCategory = item.category === selectedCategory;
-    return matchesSearch && matchesCategory && matchesMenuType;
+    return matchesSearch && item.category === categoryName && matchesMenuType;
   });
 
   return (
-    // Thay đổi ở đây: Thêm "flex flex-col" và bỏ "overflow-y-auto"
     <div className="p-8 h-full flex flex-col bg-primary-bg">
-      {/* ===== PHẦN CỐ ĐỊNH ===== */}
       <div>
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-primary-headline mb-3">
             Khám phá thực đơn
           </h1>
         </div>
-
-        {/* Search and Filter */}
         <div className="flex gap-4 mb-8">
           <select
             value={selectedMenuType}
@@ -51,7 +49,6 @@ const MenuSection = ({
               </option>
             ))}
           </select>
-
           <div className="flex-1 relative">
             <Search
               className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-paragraph"
@@ -66,8 +63,7 @@ const MenuSection = ({
             />
           </div>
         </div>
-
-        {/* Categories */}
+        
         <div className="flex flex-wrap gap-3 mb-8">
           {categories.map((category) => {
             const IconComponent = category.icon;
@@ -78,7 +74,7 @@ const MenuSection = ({
                 className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-semibold transition-all duration-300 shadow-md ${
                   selectedCategory === category.id
                     ? 'bg-primary-button text-primary-main shadow-lg'
-                    : 'bg-primary-main text-primary-headline' // Sửa lỗi chính tả "headliney"
+                    : 'bg-primary-main text-primary-headline'
                 }`}
               >
                 <IconComponent size={18} />
@@ -105,20 +101,18 @@ const MenuSection = ({
                   />
                 </div>
                 {item.isPopular && (
-                  <div className="absolute top-3 right-3 bg-primary-highlight text-primary-main px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                  <div className="absolute top-3 right-3 bg-yellow-400 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
                     <Star size={12} className="fill-current" />
                     Phổ biến
                   </div>
                 )}
               </div>
-
               <h3 className="font-bold text-primary-headline text-lg mb-2">
                 {item.name}
               </h3>
               <p className="text-sm text-primary-paragraph font-medium mb-4">
                 {item.category}
               </p>
-
               <div className="flex items-center justify-between">
                 <p className="text-primary-headline font-bold text-xl">
                   {item.price.toLocaleString('vi-VN')}đ
